@@ -26,6 +26,7 @@ public class options extends AppCompatActivity {
     public EditText charactersTestInput;
     public EditText linesTestInput;
     public Button characterPerLineBtn;
+    public CheckBox watchSimulationCheckBox;
     @Override
     protected  void onStart() {
         super.onStart();
@@ -42,16 +43,26 @@ public class options extends AppCompatActivity {
         linesTestInput = findViewById(R.id.testLinesInput);
         characterPerLineBtn = findViewById(R.id.charactersPerLineTestBtn);
         CheckBox debugModeCheckBox = (CheckBox)findViewById(R.id.debugModeBox);
+
         Button saveSettingsBtn = (Button)findViewById(R.id.saveSettingsBtn);
         EditText maxCharacters = (EditText)findViewById(R.id.maxCharactersPreference);
         EditText maxLines = (EditText)findViewById(R.id.maxLinesPreference);
+        EditText maxCharsPerLine = (EditText)findViewById(R.id.maxCharsPerLine);
+
         maxCharacters.setText(Integer.toString(readSettings(0)));
         maxLines.setText(Integer.toString(readSettings(1)));
+        maxCharsPerLine.setText((Integer.toString(readSettings(2))));
+
+        watchSimulationCheckBox = (CheckBox)findViewById(R.id.watchSimulationCheckBox);
+        watchSimulationCheckBox.setChecked(checkWatchSimulation());
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(options.this, MainActivity.class));
+                if(readSettings(3)== 1)
+                    startActivity((new Intent(options.this, watch_simulation_mode.class)));
+                else
+                    startActivity(new Intent(options.this, MainActivity.class));
             }
 
         });
@@ -77,12 +88,19 @@ public class options extends AppCompatActivity {
             }
         });
 
+        watchSimulationCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+
 
         saveSettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 maxCharacters.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                SaveToPreferences(maxCharacters, maxLines);
+                SaveToPreferences(maxCharacters, maxLines, maxCharsPerLine);
             }
         });
 
@@ -180,13 +198,22 @@ public class options extends AppCompatActivity {
         }
     };
 
-    public void SaveToPreferences(EditText maxChars, EditText maxLines)
+    public void SaveToPreferences(EditText maxChars, EditText maxLines, EditText maxCharsPerLine)
     {
         SharedPreferences sharedpref = getSharedPreferences("settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpref.edit();
         editor.putInt("maxCharacters", Integer.parseInt(maxChars.getText().toString()));
         Log.i("test", String.valueOf(Integer.parseInt(maxChars.getText().toString())));
         editor.putInt("maxLines", Integer.parseInt(String.valueOf(Integer.parseInt(maxLines.getText().toString()))));
+        editor.putInt("maxPerLine", Integer.parseInt(maxCharsPerLine.getText().toString()));
+        if(watchSimulationCheckBox.isChecked())
+        {
+            editor.putInt("watchSimulation", 1);
+        }
+        else
+        {
+            editor.putInt("watchSimulation",0);
+        }
         editor.apply();
     }
 
@@ -200,10 +227,31 @@ public class options extends AppCompatActivity {
         {
             SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
             Log.i("max Lines", Integer.toString(sharedprefs.getInt("maxLines", 0)));
-            return sharedprefs.getInt("maxLines", 0);
+            return sharedprefs.getInt("maxPerLine", 0);
         }
-        else{
+        else if (value ==2)
+        {
+            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
+            Log.i("max Lines per ", Integer.toString(sharedprefs.getInt("maxPerLine", 0)));
+            return sharedprefs.getInt("maxPerLine", 17);
+        }
+        else if(value == 3)
+        {
+            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
+            Log.i("line simulation", Integer.toString(sharedprefs.getInt("watchSimulation", 0)));
+            return sharedprefs.getInt("watchSimulation", 0);
+        }
+        else
+        {
             return 0;
         }
+    }
+
+    boolean checkWatchSimulation()
+    {
+        if(readSettings(3) == 0)
+            return false;
+        else
+            return true;
     }
 }
