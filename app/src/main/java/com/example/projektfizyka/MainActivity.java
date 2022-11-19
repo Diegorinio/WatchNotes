@@ -17,25 +17,94 @@ import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.example.projektfizyka.UserSettings;
 import com.example.projektfizyka.NoteNotification;
+import com.example.projektfizyka.NotesFilesPreferences;
 
-public class MainActivity extends AppCompatActivity implements UserInteractions{
+import org.w3c.dom.Text;
+
+public class MainActivity extends AppCompatActivity{
     //@Override
-    public int maxCharactersSetting;
     UserSettings settings;
     NoteNotification Notification;
+    NotesFilesPreferences NoteFiles;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         settings = new UserSettings(getApplicationContext());
         Notification = new NoteNotification("Note", getApplicationContext());
-//        startActivity(new Intent(MainActivity.this, NotesActivity.class));
-        if(settings.CheckIfPreferencesExists()){
+        NoteFiles = new NotesFilesPreferences(getApplicationContext());
+
+        Button NewNoteActivity = (Button) findViewById(R.id.newNoteBtn);
+        Button optionsBtn = (Button)findViewById(R.id.optionsBtn);
+
+        Notification.SetUpNoteNotificationManager();
+
+
+        NewNoteActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    if(settings.isSimulatedMode()){
+                        startActivity(new Intent(MainActivity.this, watch_simulation_mode.class));
+                    }
+                else{
+                    startActivity((new Intent(MainActivity.this, NotesActivity.class)));
+                }
+            }
+        });
+
+        optionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(MainActivity.this, options.class)));
+            }
+        });
+
+    }
+
+    protected void onStart() {
+
+        super.onStart();
+        LinearLayout ListLayout = (LinearLayout) findViewById(R.id.FilesListContainer);
+        ScrollView listLayout = (ScrollView)findViewById(R.id.FilesListContainerScroll);
+        String[] ListFiles = NoteFiles.GetFilesNamesArray();
+//        for(String x: NoteFiles.GetFilesNamesArray()){
+////            Log.i("Len ", x);
+////        }
+        TextView NotePreview = (TextView) findViewById(R.id.noteContentFile);
+        TextView NoteTitle = (TextView) findViewById(R.id.noteTitle);
+        Button deleteNoteBtn = (Button) findViewById(R.id.deleteBtn);
+        Button sendNoteBtn = (Button) findViewById(R.id.sendNotifyBtn);
+        if(ListFiles.length >0){
+            for(String file: ListFiles){
+                Button newBtn = CreateElementButton(file);
+                ListLayout.addView(newBtn);
+                newBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String content =NoteFiles.ReadContentFromFile(newBtn.getText().toString());
+                        NotePreview.setText(content);
+                        NoteTitle.setText(newBtn.getText().toString());
+                        deleteNoteBtn.setEnabled(true);
+                    }
+                });
+            }
+        }
+        else{
+
+        }
+
+                if(settings.CheckIfPreferencesExists()){
             if(settings.isSimulatedMode()){
                 startActivity(new Intent(MainActivity.this, watch_simulation_mode.class));
             }
@@ -44,94 +113,29 @@ public class MainActivity extends AppCompatActivity implements UserInteractions{
             startActivity((new Intent(MainActivity.this, options.class)));
         }
 
-        Button notifyButton;
-        Button optionsBtn;
-        EditText noteInput;
-        Button InputclearBtn;
-        InputclearBtn = findViewById(R.id.clearInputBtn);
-
-        noteInput = findViewById(R.id.noteText);
-        noteInput.setMovementMethod(new ScrollingMovementMethod());
-        notifyButton = findViewById((R.id.addToNoteBtn));
-        TextView inputCharsLen = (TextView)findViewById(R.id.inputCharsLen);
-        TextView inputeLinesLen = (TextView)findViewById(R.id.inputLinesText);
-        Button FileMode = (Button)findViewById(R.id.FileMode);
-        //options btn
-        optionsBtn = findViewById(R.id.optionsBtn);
-
-
-        TextWatcher textEditorWatcher = new TextWatcher(){
-
+        sendNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                int len = noteInput.getText().length();
-                int lines = noteInput.getLineCount();
-                inputCharsLen.setText(String.valueOf(charSequence.length()));
-                inputeLinesLen.setText((Integer.toString(lines)));
-                if(len > settings.getMaxChars())
-                {
-                    inputCharsLen.setTextColor(Color.RED);
-                }
-                else
-                {
-                    inputCharsLen.setTextColor(Color.BLACK);
-                }
-                if(lines > settings.getMaxLines())
-                {
-                    inputeLinesLen.setTextColor(Color.RED);
-                }
-                else
-                {
-                    inputeLinesLen.setTextColor(Color.BLACK);
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        };
-        noteInput.addTextChangedListener(textEditorWatcher);
-
-
-        Notification.SetUpNoteNotificationManager();
-
-        notifyButton.setOnClickListener(new View.OnClickListener() {
-            //@Override
             public void onClick(View view) {
-                //notka 646 znakow 39 linii amazfit bip u pro- 38 bo 39 jest ledwie widoczna
-                Notification.CreateNoteNotification("Notatka", noteInput.getText().toString());
+                Notification.CreateNoteNotification("Notatka", NotePreview.getText().toString());
             }
         });
 
-        optionsBtn.setOnClickListener(new View.OnClickListener() {
+        deleteNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, options.class));
+                NoteFiles.DeleteFile(NoteTitle.getText().toString());
+                finish();
+                startActivity(getIntent());
             }
         });
-        FileMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, NotesActivity.class));
-            }
-        });
-        InputclearBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                noteInput.setText("");
-                noteInput.onEditorAction(EditorInfo.IME_ACTION_DONE);
-            }
-        });
+
+
+
     }
-
-    protected void onStart() {
-        super.onStart();
+    private Button CreateElementButton(String BtnText){
+        Button NewBtn = new Button(this);
+        NewBtn.setText(BtnText);
+        NewBtn.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return NewBtn;
     }
-
 }

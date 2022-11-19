@@ -25,7 +25,7 @@
         android:hint="Main note on watch view"
         android:isScrollContainer="true"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/noteText"
+        app:layout_constraintBottom_toTopOf="@+id/noteInputTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.784"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,12 +104,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.438"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteText"
+        app:layout_constraintTop_toBottomOf="@+id/noteInputTxt"
         app:layout_constraintVertical_bias="0.066"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/noteText"
+        android:id="@+id/noteInputTxt"
         android:layout_width="209dp"
         android:layout_height="40dp"
         android:allowUndo="true"
@@ -136,7 +136,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.936"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteText"
+        app:layout_constraintTop_toBottomOf="@+id/noteInputTxt"
         app:layout_constraintVertical_bias="0.089"
         tools:ignore="MissingConstraints" />
 
@@ -152,7 +152,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteText"
+        app:layout_constraintTop_toBottomOf="@+id/noteInputTxt"
         app:layout_constraintVertical_bias="0.034"
         tools:ignore="MissingConstraints" />
 

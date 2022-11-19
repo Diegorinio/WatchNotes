@@ -57,4 +57,8 @@ public class NotesFilesManager{
 
         return ret;
     }
+
+    public void DeleteFile(Context context, String filename){
+        context.deleteFile(filename+".txt");
+    }
 }

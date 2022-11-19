@@ -1,28 +1,17 @@
 package com.example.projektfizyka;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.example.projektfizyka.UserSettings;
+
 public class watch_simulation_mode extends AppCompatActivity {
     public int maxCharactersSetting;
     public int maxLineLen;
@@ -43,7 +32,7 @@ public class watch_simulation_mode extends AppCompatActivity {
         watchSimulationNoteOutput.setMovementMethod(new ScrollingMovementMethod());
         Button InputclearBtn;
         InputclearBtn = findViewById(R.id.clearInputBtn);
-        noteInput = findViewById(R.id.noteText);
+        noteInput = findViewById(R.id.noteInputTxt);
         noteInput.setFilters(new InputFilter[]{
                 new InputFilter.LengthFilter(settings.getMaxPerLine())
         });
