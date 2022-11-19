@@ -21,29 +21,29 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.example.projektfizyka.UserSettings;
+import com.example.projektfizyka.NoteNotification;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements UserInteractions{
     //@Override
-    static void TextSplitter(String inputText, EditText targetText)
-    {
-        int maxChars = 501;
-        int maxLines = 39;//38 bo ucina 39
-
-    }
     public int maxCharactersSetting;
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        if (getCurrentFocus() != null) {
-//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-//        }
-//        return super.dispatchTouchEvent(ev);
-//    }
+    UserSettings settings;
+    NoteNotification Notification;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        settings = new UserSettings(getApplicationContext());
+        Notification = new NoteNotification("Note", getApplicationContext());
+//        startActivity(new Intent(MainActivity.this, NotesActivity.class));
+        if(settings.CheckIfPreferencesExists()){
+            if(settings.isSimulatedMode()){
+                startActivity(new Intent(MainActivity.this, watch_simulation_mode.class));
+            }
+        }
+        else{
+            startActivity((new Intent(MainActivity.this, options.class)));
+        }
 
-        String GROUP = "notatki";
-        String NoteChannelID= "MainNote";
         Button notifyButton;
         Button optionsBtn;
         EditText noteInput;
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         notifyButton = findViewById((R.id.addToNoteBtn));
         TextView inputCharsLen = (TextView)findViewById(R.id.inputCharsLen);
         TextView inputeLinesLen = (TextView)findViewById(R.id.inputLinesText);
+        Button FileMode = (Button)findViewById(R.id.FileMode);
         //options btn
         optionsBtn = findViewById(R.id.optionsBtn);
 
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 int lines = noteInput.getLineCount();
                 inputCharsLen.setText(String.valueOf(charSequence.length()));
                 inputeLinesLen.setText((Integer.toString(lines)));
-                if(len > readSettings(0))
+                if(len > settings.getMaxChars())
                 {
                     inputCharsLen.setTextColor(Color.RED);
                 }
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     inputCharsLen.setTextColor(Color.BLACK);
                 }
-                if(lines > readSettings(1))
+                if(lines > settings.getMaxLines())
                 {
                     inputeLinesLen.setTextColor(Color.RED);
                 }
@@ -96,34 +97,15 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         noteInput.addTextChangedListener(textEditorWatcher);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel(NoteChannelID, NoteChannelID, NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel((channel));
-        }
+
+
+        Notification.SetUpNoteNotificationManager();
 
         notifyButton.setOnClickListener(new View.OnClickListener() {
             //@Override
             public void onClick(View view) {
                 //notka 646 znakow 39 linii amazfit bip u pro- 38 bo 39 jest ledwie widoczna
-//                int chars = Integer.parseInt(testChars.getText().toString());
-//                String newChars = "";
-//                for(int x=1;x<=chars;x++)
-//                {
-//                    newChars += Integer.toString(x)+"\n";
-//                }
-                noteInput.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, NoteChannelID);
-                builder.setContentTitle("Test");
-                builder.setContentTitle("Notatka");
-                builder.setSmallIcon(R.drawable.ic_launcher_foreground);
-                builder.setGroup(GROUP);
-                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                builder.setStyle(new NotificationCompat.BigTextStyle().bigText(noteInput.getText().toString()));
-                builder.setAutoCancel(false);
-
-                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
-                managerCompat.notify(1, builder.build());
+                Notification.CreateNoteNotification("Notatka", noteInput.getText().toString());
             }
         });
 
@@ -131,6 +113,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, options.class));
+            }
+        });
+        FileMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, NotesActivity.class));
             }
         });
         InputclearBtn.setOnClickListener(new View.OnClickListener() {
@@ -144,53 +132,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        maxCharactersSetting = readSettings(10);
-        Log.i("state" , Integer.toString(readSettings(3)));
-
-        SharedPreferences sharedprefs = getSharedPreferences("settings", MODE_PRIVATE);
-        if(!sharedprefs.contains("maxCharacters")) {
-            startActivity((new Intent(MainActivity.this, options.class)));
-        }
-        else if(sharedprefs.contains("maxCharacters")){
-            if(readSettings(3)==1)
-            {
-                startActivity(new Intent(MainActivity.this, watch_simulation_mode.class));
-            }
-        }
     }
 
-    int readSettings(int value){
-        if(value == 0){
-            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-            Log.i("max chars", Integer.toString(sharedprefs.getInt("maxCharacters", 0)));
-            return sharedprefs.getInt("maxCharacters", 0);
-        }
-        else if (value == 1)
-        {
-            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-            Log.i("max Lines", Integer.toString(sharedprefs.getInt("maxLines", 0)));
-            return sharedprefs.getInt("maxLines", 0);
-        }
-        else if (value ==2)
-        {
-            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-            Log.i("max Lines per ", Integer.toString(sharedprefs.getInt("maxPerLine", 0)));
-            return sharedprefs.getInt("maxPerLine", 17);
-        }
-        else if(value == 3)
-        {
-            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-            Log.i("line simulation", Integer.toString(sharedprefs.getInt("watchSimulation", 0)));
-            return sharedprefs.getInt("watchSimulation", 0);
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
-    public void WatchSimulation(EditText input)
-    {
-
-    }
 }

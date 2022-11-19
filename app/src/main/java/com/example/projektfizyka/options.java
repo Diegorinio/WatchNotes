@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -18,22 +19,24 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-
+import com.example.projektfizyka.NoteNotification;
 public class options extends AppCompatActivity {
-    String TestChannelID = "TESTCHANNELID";
     public Button linesTestBtn;
     public Button charactersTestBtn;
     public EditText charactersTestInput;
     public EditText linesTestInput;
     public Button characterPerLineBtn;
     public CheckBox watchSimulationCheckBox;
+    UserSettings settings;
+    NoteNotification Notification;
     @Override
-    protected  void onStart() {
-        super.onStart();
-    }
+    //Ja prdl, okazuje sie ze OnCreate jest na samym poczatku a potem OnStart
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
+        settings = new UserSettings(getApplicationContext());
+        settings.init_OptionsGetActivity(this);
+        Notification = new NoteNotification("TESTCHANNELID", getApplicationContext());
 
         Button backBtn;
         backBtn = findViewById(R.id.mainActivityBtn);
@@ -49,29 +52,31 @@ public class options extends AppCompatActivity {
         EditText maxLines = (EditText)findViewById(R.id.maxLinesPreference);
         EditText maxCharsPerLine = (EditText)findViewById(R.id.maxCharsPerLine);
 
-        maxCharacters.setText(Integer.toString(readSettings(0)));
-        maxLines.setText(Integer.toString(readSettings(1)));
-        maxCharsPerLine.setText((Integer.toString(readSettings(2))));
+        maxCharacters.setText(Integer.toString(settings.getMaxChars()));
+        maxLines.setText(Integer.toString(settings.getMaxLines()));
+        maxCharsPerLine.setText((Integer.toString(settings.getMaxPerLine())));
 
         watchSimulationCheckBox = (CheckBox)findViewById(R.id.watchSimulationCheckBox);
-        watchSimulationCheckBox.setChecked(checkWatchSimulation());
+        watchSimulationCheckBox.setChecked(settings.isSimulatedMode());
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(readSettings(3)== 1)
+                Log.i("state to load:", String.valueOf(settings.isSimulatedMode()));
+                if(settings.isSimulatedMode())
                     startActivity((new Intent(options.this, watch_simulation_mode.class)));
                 else
-                    startActivity(new Intent(options.this, MainActivity.class));
+                    startActivity((new Intent(options.this, MainActivity.class)));
             }
 
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel(TestChannelID, TestChannelID, NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel((channel));
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            NotificationChannel channel = new NotificationChannel(TestChannelID, TestChannelID, NotificationManager.IMPORTANCE_DEFAULT);
+//            NotificationManager manager = getSystemService(NotificationManager.class);
+//            manager.createNotificationChannel((channel));
+//        }
+        Notification.SetUpNoteNotificationManager();
 
 
         debugModeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -88,19 +93,13 @@ public class options extends AppCompatActivity {
             }
         });
 
-        watchSimulationCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-            }
-        });
-
 
         saveSettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 maxCharacters.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                SaveToPreferences(maxCharacters, maxLines, maxCharsPerLine);
+                Log.i("simulation mode: ", String.valueOf(watchSimulationCheckBox.isChecked()));
+                settings.SaveToPreferences(maxCharacters, maxLines, maxCharsPerLine, watchSimulationCheckBox);
             }
         });
 
@@ -108,77 +107,28 @@ public class options extends AppCompatActivity {
             //@Override
             public void onClick(View view) {
                 //notka 501 znakow 39 linii amazfit bip u pro- 38 bo 39 jest ledwie widoczna
-                String newChars = "";
-                for(int x=1;x<=Integer.parseInt(charactersTestInput.getText().toString());x++)
-                {
-                    if(x%2==0)
-                        newChars += "a";
-                    else
-                        newChars += "b";
-                }
-                charactersTestBtn.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(options.this, TestChannelID);
-                builder.setContentTitle("Test");
-                builder.setSmallIcon(R.drawable.ic_launcher_foreground);
-                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                builder.setStyle(new NotificationCompat.BigTextStyle().bigText(newChars));
-                builder.setAutoCancel(false);
-
-                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(options.this);
-                managerCompat.notify(1, builder.build());
+                Notification.CreateNoteNotification("Test", MaxCharactersTest());
             }
         });
 
         linesTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newChars = "";
-                for(int x=1;x<=Integer.parseInt(linesTestInput.getText().toString());x++)
-                {
-                    newChars += Integer.toString(x)+"\n";
-                }
-                charactersTestBtn.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(options.this, TestChannelID);
-                builder.setContentTitle("Test");
-                builder.setSmallIcon(R.drawable.ic_launcher_foreground);
-                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                builder.setStyle(new NotificationCompat.BigTextStyle().bigText(newChars));
-                builder.setAutoCancel(false);
-
-                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(options.this);
-                managerCompat.notify(1, builder.build());
+                Notification.CreateNoteNotification("Test", MaxLinesTest());
             }
         });
 
         characterPerLineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newChars = "";
-                int corr = 1;
-                for(int x=1;x<=100;x++)
-                {
-                    if(corr>9)
-                        corr = 1;
-                    newChars += Integer.toString(corr);
-                    corr++;
-                }
-                charactersTestBtn.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(options.this, TestChannelID);
-                builder.setContentTitle("Test");
-                builder.setSmallIcon(R.drawable.ic_launcher_foreground);
-                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                builder.setStyle(new NotificationCompat.BigTextStyle().bigText(newChars));
-                builder.setAutoCancel(false);
 
-                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(options.this);
-                managerCompat.notify(1, builder.build());
-
+                Notification.CreateNoteNotification("Test", MaxCharactersPerLineTest());
             }
         });
 
     }
 
-    public void DebugOptions(boolean state)
+    private void DebugOptions(boolean state)
     {
         if(state)
         {
@@ -198,60 +148,38 @@ public class options extends AppCompatActivity {
         }
     };
 
-    public void SaveToPreferences(EditText maxChars, EditText maxLines, EditText maxCharsPerLine)
+    private String MaxCharactersTest()
     {
-        SharedPreferences sharedpref = getSharedPreferences("settings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpref.edit();
-        editor.putInt("maxCharacters", Integer.parseInt(maxChars.getText().toString()));
-        Log.i("test", String.valueOf(Integer.parseInt(maxChars.getText().toString())));
-        editor.putInt("maxLines", Integer.parseInt(String.valueOf(Integer.parseInt(maxLines.getText().toString()))));
-        editor.putInt("maxPerLine", Integer.parseInt(maxCharsPerLine.getText().toString()));
-        if(watchSimulationCheckBox.isChecked())
+        String newChars = "";
+        for(int x=1;x<=Integer.parseInt(charactersTestInput.getText().toString());x++)
         {
-            editor.putInt("watchSimulation", 1);
+            if(x%2==0)
+                newChars += "a";
+            else
+                newChars += "b";
         }
-        else
-        {
-            editor.putInt("watchSimulation",0);
-        }
-        editor.apply();
+        return newChars;
     }
-
-    int readSettings(int value){
-        if(value == 0){
-            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-            Log.i("max chars", Integer.toString(sharedprefs.getInt("maxCharacters", 0)));
-            return sharedprefs.getInt("maxCharacters", 0);
-        }
-        else if (value == 1)
-        {
-            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-            Log.i("max Lines", Integer.toString(sharedprefs.getInt("maxLines", 0)));
-            return sharedprefs.getInt("maxPerLine", 0);
-        }
-        else if (value ==2)
-        {
-            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-            Log.i("max Lines per ", Integer.toString(sharedprefs.getInt("maxPerLine", 0)));
-            return sharedprefs.getInt("maxPerLine", 17);
-        }
-        else if(value == 3)
-        {
-            SharedPreferences sharedprefs = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-            Log.i("line simulation", Integer.toString(sharedprefs.getInt("watchSimulation", 0)));
-            return sharedprefs.getInt("watchSimulation", 0);
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
-    boolean checkWatchSimulation()
+    private String MaxLinesTest()
     {
-        if(readSettings(3) == 0)
-            return false;
-        else
-            return true;
+        String newChars = "";
+        for(int x=1;x<=Integer.parseInt(linesTestInput.getText().toString());x++)
+        {
+            newChars += Integer.toString(x)+"\n";
+        }
+        return newChars;
+    }
+    private String MaxCharactersPerLineTest()
+    {
+        String newChars = "";
+        int corr = 1;
+        for(int x=1;x<=100;x++)
+        {
+            if(corr>9)
+                corr = 1;
+            newChars += Integer.toString(corr);
+            corr++;
+        }
+        return newChars;
     }
 }
