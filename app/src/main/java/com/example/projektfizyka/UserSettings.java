@@ -6,9 +6,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
-public class UserSettings implements UserInteractions{
+public class UserSettings {
 
     private Context context;
     private Activity m_Activity;
@@ -21,6 +20,8 @@ public class UserSettings implements UserInteractions{
     private final String MaxCharsPerLineID = "maxPerLine";
     private int simulationMode;
     private final String SimulationModeID = "watchSimulation";
+    private int autoFormatMode;
+    private final String AutoFormatModeID = "autoformatMode";
     private final SharedPreferences sharedpref;
     public UserSettings(Context context)
     {
@@ -46,7 +47,7 @@ public class UserSettings implements UserInteractions{
     }
 
 
-    public void SaveToPreferences( EditText maxChars, EditText maxLines, EditText maxCharsPerLine, CheckBox watchSimulationCheckbox)
+    public void SaveToPreferences( EditText maxChars, EditText maxLines, EditText maxCharsPerLine, CheckBox watchSimulationCheckbox, CheckBox autoFormatModeCheckBox)
     {
         SharedPreferences.Editor editor = this.sharedpref.edit();
         editor.putInt(MaxCharactersID, Integer.parseInt(maxChars.getText().toString()));
@@ -61,8 +62,14 @@ public class UserSettings implements UserInteractions{
         {
             editor.putInt(SimulationModeID,0);
         }
+        if(autoFormatModeCheckBox.isChecked()){
+            editor.putInt(AutoFormatModeID, 1);
+        }
+        else{
+            editor.putInt(AutoFormatModeID, 0);
+        }
         editor.apply();
-        SendResponseToEvent(context, "Settings saved");
+        UserInteractions.SendMessage(context, "Settings saved");
     }
 
     private void init_ReadSharedPreferenceValues()
@@ -72,11 +79,12 @@ public class UserSettings implements UserInteractions{
         this.maxLines = sharedpref.getInt(MaxLinesID, 38);
         this.maxPerLine = sharedpref.getInt(MaxCharsPerLineID, 17);
         this.simulationMode = sharedpref.getInt(SimulationModeID, 0);
+        this.autoFormatMode = sharedpref.getInt(AutoFormatModeID, 0);
     }
 
     private void ShowMeWhatYouGot()
     {
-        Log.i("Prefs:", Integer.toString(maxLines)+Integer.toString(maxCharacters)+Integer.toString(maxPerLine) + Integer.toString(simulationMode));
+        Log.i("Prefs:", Integer.toString(maxLines)+Integer.toString(maxCharacters)+Integer.toString(maxPerLine) + Integer.toString(simulationMode) + Integer.toString(autoFormatMode));
     }
 
     public int getMaxChars()
@@ -98,8 +106,13 @@ public class UserSettings implements UserInteractions{
             return false;
     }
 
-    @Override
-    public void SendResponseToEvent(Context context, String response) {
-        UserInteractions.super.SendResponseToEvent(context, response);
+    public boolean isFormatModeOn(){
+        if(autoFormatMode==1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
+
 }

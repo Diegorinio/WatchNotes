@@ -22,21 +22,22 @@
 
     <Button
         android:id="@+id/newNoteBtn"
-        android:layout_width="106dp"
-        android:layout_height="57dp"
+        android:layout_width="92dp"
+        android:layout_height="48dp"
         android:text="new"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toEndOf="@+id/sendNotifyBtn"
         app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
-        app:layout_constraintVertical_bias="0.294" />
+        app:layout_constraintVertical_bias="0.551" />
 
     <ScrollView
         android:id="@+id/FilesListContainerScroll"
         android:layout_width="242dp"
         android:layout_height="218dp"
         android:isScrollContainer="true"
+        android:background="@drawable/box"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,11 +45,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.754"
+        android:fillViewport="true"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:id="@+id/FilesListContainer"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:isScrollContainer="true"
             android:orientation="vertical"
@@ -65,11 +67,13 @@
         android:id="@+id/noteContentFile"
         android:layout_width="229dp"
         android:layout_height="218dp"
+        android:background="@drawable/edit_text_border"
+        android:hint="Selected note text"
         android:isScrollContainer="true"
         android:orientation="vertical"
         android:scrollbars="vertical"
         android:singleLine="false"
-        android:hint="Selected note text"
+        android:textAlignment="viewStart"
         app:layout_constraintBottom_toTopOf="@+id/FilesListContainerScroll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,13 +83,13 @@
     <Button
         android:id="@+id/deleteBtn"
         android:layout_width="78dp"
-        android:layout_height="44dp"
-        android:background="#FF3838"
-        android:text="del"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/red"
         android:enabled="false"
+        android:text="del"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/newNoteBtn"
-        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintEnd_toStartOf="@+id/sendNotifyBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
         app:layout_constraintVertical_bias="0.548" />
@@ -94,20 +98,21 @@
         android:id="@+id/sendNotifyBtn"
         android:layout_width="93dp"
         android:layout_height="53dp"
-        android:text="send"
+        android:backgroundTint="@color/green"
         android:enabled="true"
+        android:text="send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.733"
-        app:layout_constraintStart_toEndOf="@+id/newNoteBtn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
-        app:layout_constraintVertical_bias="0.493" />
+        app:layout_constraintVertical_bias="0.465" />
 
     <TextView
         android:id="@+id/noteTitle"
         android:layout_width="104dp"
         android:layout_height="22dp"
         android:hint="Note Title"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/noteContentFile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.462"

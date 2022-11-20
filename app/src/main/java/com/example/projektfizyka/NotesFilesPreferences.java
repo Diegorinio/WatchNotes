@@ -1,6 +1,9 @@
 package com.example.projektfizyka;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -22,35 +25,40 @@ public class NotesFilesPreferences extends NotesFilesManager{
         ShowMeWhatYouGot();
     }
 
-    public void AddValueToFileNamesPreferences(String title){
+    public void AddValueToFileNamesPreferences(String title, String content){
         SharedPreferences.Editor editor = this.sharedpref.edit();
-        String act_string = title+split_mark+GetFilesNameList();
+        String form_title = title.replaceAll(" ", "");
+        String act_string = form_title+split_mark+GetFilesNameList();
         editor.putString(SharedPreferencesID, act_string);
         Log.i("File title", act_string);
         editor.apply();
+        SaveToFile(form_title, content);
+        UserInteractions.SendMessage(_Context, "File saved");
         ShowMeWhatYouGot();
     }
 
-    private void RemoveFileNameFromPreferences(String title){
+    public void RemoveFileNameFromPreferences(String filename){
         SharedPreferences.Editor editor = this.sharedpref.edit();
         String list = GetFilesNameList();
-        String new_list = list.replace(title+split_mark,"");
+        String new_list = list.replace(filename+split_mark,"");
         editor.putString(SharedPreferencesID, new_list);
         editor.apply();
+        DeleteFile(filename);
         ShowMeWhatYouGot();
+        UserInteractions.SendMessage(_Context, "File removed");
     }
 
-    public void SaveToFile(String Title, String content){
+    private void SaveToFile(String Title, String content){
         WriteToFile(Title, content);
     }
 
-    public String ReadContentFromFile(String Filename){
+    public String ReadContentFromFile(String Filename)
+    {
         return ReadFromFile(_Context, Filename);
     }
 
-    public void DeleteFile(String filename){
+    private void DeleteFile(String filename){
         DeleteFile(_Context, filename);
-        RemoveFileNameFromPreferences(filename);
         Log.i("Remove file", filename+".txt");
     }
 
@@ -62,20 +70,7 @@ public class NotesFilesPreferences extends NotesFilesManager{
         String list = this.sharedpref.getString(SharedPreferencesID,"");
         Log.i("No kurwa mac", list);
         String[] FilesName = list.split(":");
-//        String[] result = new String[0];
         List<String> result = new ArrayList<>();
-//        for(int x=0; x<=FilesName.length-1;x++){
-//            if(FilesName[x]!=null || FilesName[x].length()!=0){
-//                result.set(x, FilesName[x]);
-//            }
-//        }
-//        for(String i:FilesName){
-//            Log.i("Araj:", i);
-//            Log.i("araj len", Integer.toString(FilesName.length));
-//        }
-//        for(Object x: result.toArray()){
-//            Log.i("araj2", x.toString());
-//        }
         return FilesName;
     }
     private void SetDefaultPreferences(){
@@ -104,3 +99,4 @@ public class NotesFilesPreferences extends NotesFilesManager{
         }
     }
 }
+

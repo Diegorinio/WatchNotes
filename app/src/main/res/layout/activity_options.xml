@@ -250,7 +250,7 @@
         app:layout_constraintVertical_bias="0.541" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/autoFormatModeCheckBox"
         android:layout_width="143dp"
         android:layout_height="39dp"
         android:text="out auto format"

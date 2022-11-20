@@ -31,6 +31,7 @@ public class options extends AppCompatActivity {
     NoteNotification Notification;
     @Override
     //Ja prdl, okazuje sie ze OnCreate jest na samym poczatku a potem OnStart
+    //Pierdole nie chce mi sie juz robic z tego funkcji itd to i tak ustawia tylko sharedpreferences
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
@@ -59,23 +60,18 @@ public class options extends AppCompatActivity {
         watchSimulationCheckBox = (CheckBox)findViewById(R.id.watchSimulationCheckBox);
         watchSimulationCheckBox.setChecked(settings.isSimulatedMode());
 
+        CheckBox autoFormatMode = (CheckBox)findViewById(R.id.autoFormatModeCheckBox);
+        autoFormatMode.setChecked(settings.isFormatModeOn());
+
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("state to load:", String.valueOf(settings.isSimulatedMode()));
-                if(settings.isSimulatedMode())
-                    startActivity((new Intent(options.this, watch_simulation_mode.class)));
-                else
-                    startActivity((new Intent(options.this, MainActivity.class)));
+                startActivity((new Intent(options.this, MainActivity.class)));
             }
 
         });
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-//            NotificationChannel channel = new NotificationChannel(TestChannelID, TestChannelID, NotificationManager.IMPORTANCE_DEFAULT);
-//            NotificationManager manager = getSystemService(NotificationManager.class);
-//            manager.createNotificationChannel((channel));
-//        }
         Notification.SetUpNoteNotificationManager();
 
 
@@ -99,7 +95,7 @@ public class options extends AppCompatActivity {
             public void onClick(View view) {
                 maxCharacters.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 Log.i("simulation mode: ", String.valueOf(watchSimulationCheckBox.isChecked()));
-                settings.SaveToPreferences(maxCharacters, maxLines, maxCharsPerLine, watchSimulationCheckBox);
+                settings.SaveToPreferences(maxCharacters, maxLines, maxCharsPerLine, watchSimulationCheckBox, autoFormatMode);
             }
         });
 
