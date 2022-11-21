@@ -1,16 +1,10 @@
 package com.example.projektfizyka;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import com.example.projektfizyka.NoteNotification;
+
 public class options extends AppCompatActivity {
     public Button linesTestBtn;
     public Button charactersTestBtn;
@@ -63,6 +57,41 @@ public class options extends AppCompatActivity {
         CheckBox autoFormatMode = (CheckBox)findViewById(R.id.autoFormatModeCheckBox);
         autoFormatMode.setChecked(settings.isFormatModeOn());
 
+        CheckBox customFetchCheckBox = (CheckBox)findViewById(R.id.customFetchCheckbox);
+        customFetchCheckBox.setChecked(settings.isCustomFetchUrlIsEnabled());
+        EditText customFetchUrl = (EditText)findViewById(R.id.customFetchUrl);
+        customFetchUrl.setText(settings.getCustomFetchUrl());
+        if(customFetchCheckBox.isChecked()){
+            customFetchUrl.setEnabled(true);
+        }
+
+        customFetchCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if(!customFetchCheckBox.isChecked()){
+                    customFetchUrl.setEnabled(false);
+                }
+                else{
+                    AlertDialog.Builder alert = UserInteractions.AlertBuilder(options.this, "WARNING!", "This option is for advanced users");
+                    alert.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            customFetchUrl.setEnabled(true);
+                            customFetchCheckBox.setChecked(true);
+                            UserInteractions.SendMessage(getApplicationContext(), "Custom fetch url enabled");
+                        }
+                    });
+                    alert.setNegativeButton("Nope", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            customFetchCheckBox.setChecked(false);
+                        }
+                    });
+                    alert.show();
+                }
+            }
+        });
+
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +124,7 @@ public class options extends AppCompatActivity {
             public void onClick(View view) {
                 maxCharacters.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 Log.i("simulation mode: ", String.valueOf(watchSimulationCheckBox.isChecked()));
-                settings.SaveToPreferences(maxCharacters, maxLines, maxCharsPerLine, watchSimulationCheckBox, autoFormatMode);
+                settings.SaveToPreferences(maxCharacters, maxLines, maxCharsPerLine, watchSimulationCheckBox, autoFormatMode, customFetchCheckBox, customFetchUrl);
             }
         });
 

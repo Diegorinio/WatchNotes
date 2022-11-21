@@ -26,10 +26,12 @@ public class Scrapper extends AppCompatActivity {
     TextView noteContent;
     JSONArray dzejson;
     NotesFilesPreferences NoteFiles;
+    UserSettings settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrapper);
+        settings = new UserSettings(getApplicationContext());
         NoteFiles = new NotesFilesPreferences(getApplicationContext());
         Button backBtn = (Button)findViewById(R.id.backBtn);
         Button saveBtn = (Button)findViewById(R.id.saveBtn);
@@ -76,11 +78,15 @@ public class Scrapper extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Document doc;
+            String url = "https://magicznykasztan.github.io/";
             try{
-                doc = Jsoup.connect("https://magicznykasztan.github.io/").get();
+                if(settings.isCustomFetchUrlIsEnabled()){
+                    url = settings.getCustomFetchUrl();
+                }
+                doc = Jsoup.connect(url).get();
                 String title = doc.title();
 //                Essa.setText(title);
-                Elements element = doc.getElementsByClass("notesjson");
+                Elements element = doc.select("body");
                 Log.i("Title",element.text());
                 JSONArray result = StringOperations.ReadFromJsonString(element.text());
 //                noteContent.setText(result.getJSONObject(0).getString("note_content"));
@@ -98,9 +104,16 @@ public class Scrapper extends AppCompatActivity {
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
             try {
-                GenerateNotes(dzejson);
+                if(dzejson !=null){
+                    GenerateNotes(dzejson);
+                }else{
+                    UserInteractions.SendMessage(getApplicationContext(), "Failed to receive data");
+                    startActivity(new Intent(Scrapper.this, MainActivity.class));
+                }
             } catch (JSONException e) {
-                e.printStackTrace();
+                UserInteractions.SendMessage(getApplicationContext(), "Failed to receive data");
+                startActivity(new Intent(Scrapper.this, MainActivity.class));
+//                e.printStackTrace();
             }
         }
     }
@@ -114,8 +127,8 @@ public class Scrapper extends AppCompatActivity {
             String content = Notes.getJSONObject(x).getString("note_content");
             Button newBtn = CreateElementButton(title);
             list.addView(newBtn);
-            TextView newView = CreateTextView(content);
-            list.addView(newView);
+//            TextView newView = CreateTextView(content);
+//            list.addView(newView);
 
             newBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -142,40 +155,5 @@ public class Scrapper extends AppCompatActivity {
         newView.setLayoutParams(params);
         return newView;
     }
-
-//    private void GenerateNotes(){
-//        LinearLayout ListLayout = (LinearLayout) findViewById(R.id.FilesListContainer);
-//        String[] ListFiles = NoteFiles.GetFilesNamesArray();
-//        TextView NotePreview = (TextView) findViewById(R.id.noteContentFile);
-//        TextView NoteTitle = (TextView) findViewById(R.id.scrappedNoteTitle);
-//        Button deleteNoteBtn = (Button) findViewById(R.id.deleteBtn);
-//        Button sendNoteBtn = (Button) findViewById(R.id.sendNotifyBtn);
-//        if(ListFiles.length >0){
-//            for(String file: ListFiles){
-//                if(file == null || file == ""){
-//                    Log.i("file exc", file);
-//                }
-//                else{
-//                    Button newBtn = CreateElementButton(file);
-//                    ListLayout.addView(newBtn);
-//                    newBtn.setBackgroundResource(R.color.lightred);
-//                    newBtn.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            String content;
-//                            if(settings.isFormatModeOn()){
-//                                content =StringOperations.FormatStringOutputAuto(NoteFiles.ReadContentFromFile(newBtn.getText().toString()));
-//                            }
-//                            else{
-//                                content =NoteFiles.ReadContentFromFile(newBtn.getText().toString());
-//                            }
-//                            NotePreview.setText(content);
-//                            NoteTitle.setText(newBtn.getText().toString());
-//                            deleteNoteBtn.setEnabled(true);
-//                        }
-//                    });
-//                }
-//            }
-//        }
 
 }

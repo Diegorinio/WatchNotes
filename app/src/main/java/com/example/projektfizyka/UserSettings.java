@@ -22,6 +22,10 @@ public class UserSettings {
     private final String SimulationModeID = "watchSimulation";
     private int autoFormatMode;
     private final String AutoFormatModeID = "autoformatMode";
+    private final String isCustomFetchUrlEnabledID = "isCustomFetchUrl";
+    private boolean isCustomFetchUrl = false;
+    private final String CustomFetchUrlID = "CustomFetchUrl";
+    private String customFetchUrl;
     private final SharedPreferences sharedpref;
     public UserSettings(Context context)
     {
@@ -47,13 +51,15 @@ public class UserSettings {
     }
 
 
-    public void SaveToPreferences( EditText maxChars, EditText maxLines, EditText maxCharsPerLine, CheckBox watchSimulationCheckbox, CheckBox autoFormatModeCheckBox)
+    public void SaveToPreferences( EditText maxChars, EditText maxLines, EditText maxCharsPerLine, CheckBox watchSimulationCheckbox, CheckBox autoFormatModeCheckBox, CheckBox customFetchUrlCheckbox,EditText CustomFetchUrl)
     {
         SharedPreferences.Editor editor = this.sharedpref.edit();
         editor.putInt(MaxCharactersID, Integer.parseInt(maxChars.getText().toString()));
         Log.i(MaxCharactersID, String.valueOf(Integer.parseInt(maxChars.getText().toString())));
         editor.putInt(MaxLinesID, Integer.parseInt(maxLines.getText().toString()));
         editor.putInt(MaxCharsPerLineID, Integer.parseInt(maxCharsPerLine.getText().toString()));
+        editor.putBoolean(isCustomFetchUrlEnabledID, customFetchUrlCheckbox.isChecked());
+        editor.putString(CustomFetchUrlID, CustomFetchUrl.getText().toString());
         if(watchSimulationCheckbox.isChecked())
         {
             editor.putInt(SimulationModeID, 1);
@@ -69,6 +75,7 @@ public class UserSettings {
             editor.putInt(AutoFormatModeID, 0);
         }
         editor.apply();
+        ShowMeWhatYouGot();
         UserInteractions.SendMessage(context, "Settings saved");
     }
 
@@ -80,11 +87,13 @@ public class UserSettings {
         this.maxPerLine = sharedpref.getInt(MaxCharsPerLineID, 17);
         this.simulationMode = sharedpref.getInt(SimulationModeID, 0);
         this.autoFormatMode = sharedpref.getInt(AutoFormatModeID, 0);
+        this.customFetchUrl = sharedpref.getString(CustomFetchUrlID, "none");
+        this.isCustomFetchUrl = sharedpref.getBoolean(isCustomFetchUrlEnabledID, false);
     }
 
     private void ShowMeWhatYouGot()
     {
-        Log.i("Prefs:", Integer.toString(maxLines)+Integer.toString(maxCharacters)+Integer.toString(maxPerLine) + Integer.toString(simulationMode) + Integer.toString(autoFormatMode));
+        Log.i("shared prefs:", "Max Lines: " + Integer.toString(getMaxLines()) + " Max Characters: " + Integer.toString(getMaxChars())+ " Max Per Line: "+ Integer.toString(getMaxPerLine()) + " Autoformat: " + Boolean.toString(isFormatModeOn()) + " Input watch simulation: " + Boolean.toString(isSimulatedMode()) + " CustomFeth: " + Boolean.toString(isCustomFetchUrlIsEnabled())+ " url: "+ getCustomFetchUrl());
     }
 
     public int getMaxChars()
@@ -113,6 +122,13 @@ public class UserSettings {
         else{
             return false;
         }
+    }
+
+    public boolean isCustomFetchUrlIsEnabled(){
+        return sharedpref.getBoolean(isCustomFetchUrlEnabledID, false);
+    }
+    public String getCustomFetchUrl(){
+        return sharedpref.getString(CustomFetchUrlID, "https://magicznykasztan.github.io/");
     }
 
 }
