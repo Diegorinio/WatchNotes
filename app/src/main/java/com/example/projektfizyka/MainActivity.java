@@ -1,37 +1,18 @@
 package com.example.projektfizyka;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewStub;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import com.example.projektfizyka.UserSettings;
-import com.example.projektfizyka.NoteNotification;
-import com.example.projektfizyka.NotesFilesPreferences;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity{
     UserSettings settings;
@@ -42,12 +23,17 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        startActivity(new Intent(MainActivity.this, Scrapper.class));
         settings = new UserSettings(getApplicationContext());
         Notification = new NoteNotification("Note", getApplicationContext());
         NoteFiles = new NotesFilesPreferences(getApplicationContext());
 
+
         Button NewNoteActivity = (Button) findViewById(R.id.newNoteBtn);
         Button optionsBtn = (Button)findViewById(R.id.optionsBtn);
+        Button fetchBtn = (Button)findViewById(R.id.goToFetchBtn);
+
+        Log.i("Connection", String.valueOf(isNetworkAvailable(MainActivity.this)));
 
         Notification.SetUpNoteNotificationManager();
 
@@ -60,6 +46,18 @@ public class MainActivity extends AppCompatActivity{
                     }
                 else{
                     startActivity((new Intent(MainActivity.this, NotesActivity.class)));
+                }
+            }
+        });
+
+        fetchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isNetworkAvailable(MainActivity.this)){
+                    startActivity(new Intent(MainActivity.this, Scrapper.class));
+                }
+                else{
+                    UserInteractions.SendMessage(getApplicationContext(), "No internet connection");
                 }
             }
         });
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity{
         LinearLayout ListLayout = (LinearLayout) findViewById(R.id.FilesListContainer);
         String[] ListFiles = NoteFiles.GetFilesNamesArray();
         TextView NotePreview = (TextView) findViewById(R.id.noteContentFile);
-        TextView NoteTitle = (TextView) findViewById(R.id.noteTitle);
+        TextView NoteTitle = (TextView) findViewById(R.id.scrappedNoteTitle);
         Button deleteNoteBtn = (Button) findViewById(R.id.deleteBtn);
         Button sendNoteBtn = (Button) findViewById(R.id.sendNotifyBtn);
         if(ListFiles.length >0){
@@ -159,5 +157,10 @@ public class MainActivity extends AppCompatActivity{
     private void RestartActivty(){
                 finish();
                 startActivity(getIntent());
+    }
+
+    public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }

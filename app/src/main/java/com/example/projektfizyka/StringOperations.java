@@ -1,14 +1,10 @@
 package com.example.projektfizyka;
 
-import android.graphics.Color;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.TextView;
+import android.util.Log;
 
-import org.w3c.dom.Text;
+import org.json.*;
 
 public class StringOperations {
-    private String lorem= "Potezna wichura lamiac duze drzewa trzcina zaledwie tylko kolysze. Uwazaj uwazaj, kutang panie to nie ma sansu. Ty kurwa Efbijaj";
     public static String FormatStringOutputAuto(String Input){
         String input = Input;
         String[] inputArray;
@@ -19,6 +15,19 @@ public class StringOperations {
             String new_string = inputArray[x].substring(0,1).toUpperCase()+inputArray[x].substring(1);
             inputArray[x] = new_string;
             result+=inputArray[x];
+        }
+        return result;
+    }
+
+    public static JSONArray ReadFromJsonString(String inputJsonString) throws JSONException {
+        String data = null;
+        String[] readElements = null;
+        JSONObject reader = new JSONObject(inputJsonString);
+//        JSONArray araj = new JSONArray(inputJsonString);
+        JSONArray result = reader.getJSONArray("notes");
+        Log.i("dzejson", result.getJSONObject(1).getString("subject").toString());
+        for(int j=0;j<=result.length()-1;j++){
+            Log.i("Elements", String.valueOf(result.getString(j)));
         }
         return result;
     }
