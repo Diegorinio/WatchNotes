@@ -1,0 +1,15 @@
+{
+  "name": "file-server",
+  "version": "1.0.0",
+  "description": "simple server to create data to fetch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diegorinio",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "expressjs": "^1.0.1"
+  }
+}
