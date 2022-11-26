@@ -32,4 +32,34 @@ public class StringOperations {
         return result;
     }
 
+    public static String[] SplitNotificationsToStringLength(String Input, int MaxCharacters){
+        if(Input.length()>MaxCharacters){
+            int split_count = Input.length()/MaxCharacters;
+            split_count+=1;
+            Log.i("Split array: ", Integer.toString(split_count));
+            int rest = (Input.length()-MaxCharacters)/2;
+            String[] result = new String[split_count];
+            Log.i("araj:", Integer.toString(result.length));
+            int turns = split_count;
+            for(int x=1;x<=split_count;x++){
+                int max = Input.length();
+                if(x==1){
+                    result[x-1] = Input.substring(0, MaxCharacters).intern();
+                }
+                else if(x==split_count){
+                    result[x-1] = Input.substring((MaxCharacters*(x-1)), max);
+                }
+                else{
+                    result[x-1] = Input.substring(MaxCharacters*(x-1),MaxCharacters*x);
+                }
+            }
+            return result;
+        }else
+        {
+            String[] result = new String[1];
+            result[0] = Input;
+            return result;
+        }
+    }
+
 }

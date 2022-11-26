@@ -18,7 +18,8 @@ public class NoteNotification extends Notification {
         this.n_Context = context;
     }
 
-    public void CreateNoteNotification(String Title, String Content) {
+    public void CreateNoteNotification(String Title, String Content, int... id) {
+        int noteID = (id.length>=1)? id[0]:0;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(n_Context, ChannelID);
         builder.setContentTitle(Title);
         builder.setSmallIcon(R.drawable.ic_launcher_foreground);
@@ -27,7 +28,7 @@ public class NoteNotification extends Notification {
         builder.setAutoCancel(false);
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(n_Context);
-        managerCompat.notify(1, builder.build());
+            managerCompat.notify(noteID, builder.build());
     }
 
     public void SetUpNoteNotificationManager(){

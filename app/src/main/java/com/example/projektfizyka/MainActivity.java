@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -127,14 +128,27 @@ public class MainActivity extends AppCompatActivity{
         sendNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Notification.CreateNoteNotification("Notatka", NotePreview.getText().toString());
+                String[] NotesArray = StringOperations.SplitNotificationsToStringLength(NotePreview.getText().toString(), settings.getMaxChars());
+                Log.i("Notes array", NotesArray.toString());
+                String new_string = "";
+                for(int x=0;x<=NotesArray.length-1;x++){
+                    Log.i("Notes array", "id: "+ x +": "+NotesArray[x]);
+                    int finalX = x;
+                    Handler handler = new Handler();
+                    int finalX1 = x;
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            Notification.CreateNoteNotification("Notatka", NotesArray[finalX1],finalX1, finalX);
+                        }
+                    }, 500);
+                }
             }
         });
 
         deleteNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //jebac nie chce mi sie pisac hanlerow na onclick
+                //jebac nie chce mi sie pisac handlerow na onclick
                 AlertDialog.Builder alert = UserInteractions.AlertBuilder(MainActivity.this, "Confirm delete", "Do you want to delete file: "+NoteTitle.getText().toString());
                 alert.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override

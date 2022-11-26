@@ -96,7 +96,7 @@ public class NoteInputActivity extends AppCompatActivity {
             //@Override
             public void onClick(View view) {
                 //notka 646 znakow 39 linii amazfit bip u pro- 38 bo 39 jest ledwie widoczna
-                Notification.CreateNoteNotification("Notatka", noteInput.getText().toString());
+                Notification.CreateNoteNotification("Notatka", noteInput.getText().toString(),1);
             }
         });
 
