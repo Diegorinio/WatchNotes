@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity{
                     int finalX1 = x;
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            Notification.CreateNoteNotification("Notatka", NotesArray[finalX1],finalX1, finalX);
+                            Notification.CreateNoteNotification("Notatka", NotesArray[finalX1],finalX1);
                         }
                     }, 500);
                 }

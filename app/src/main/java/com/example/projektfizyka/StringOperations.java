@@ -41,17 +41,20 @@ public class StringOperations {
             String[] result = new String[split_count];
             Log.i("araj:", Integer.toString(result.length));
             int turns = split_count;
-            for(int x=1;x<=split_count;x++){
-                int max = Input.length();
+            int max = Input.length();
+            for(int x=1;x<=turns;x++){
+                String id = Integer.toString(x)+"#";
+                int id_len = id.length();
                 if(x==1){
-                    result[x-1] = Input.substring(0, MaxCharacters).intern();
+                    result[x-1] = Input.substring(0, MaxCharacters-id_len);
                 }
-                else if(x==split_count){
-                    result[x-1] = Input.substring((MaxCharacters*(x-1)), max);
+                else if(x==turns){
+                    result[x-1] = Input.substring(MaxCharacters*(x-1)-id_len, Input.length());
                 }
                 else{
-                    result[x-1] = Input.substring(MaxCharacters*(x-1),MaxCharacters*x);
+                    result[x-1] = Input.substring(MaxCharacters*(x-1)-id_len,MaxCharacters*x-id_len);
                 }
+                result[x-1] = id+result[x-1];
             }
             return result;
         }else

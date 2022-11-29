@@ -7,11 +7,12 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.projektfizyka"
+        applicationId "com.HappieGames.projektfizyka"
         minSdk 21
         targetSdk 32
         versionCode 1
-        versionName "1.1"
+        versionName "1.02"
+        archivesBaseName = "WatchNotes"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
