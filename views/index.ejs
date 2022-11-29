@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WatchNote file server</title>
+    <link rel="stylesheet" type="text/css" href="style/style.css"/>
+</head>
+<body>
+    <form id="note-form" method="post" action="./addtodb">
+        <label>Subject: </label><input  type="text" name="subject"/>
+        <label>Creator: </label><input type="text" name="creator"/>
+    </br>
+        <label>Note name: </label><input class="note_name" type="text" name="note_title"/>
+    </br>
+        <label>Note content </label><textarea class="note_content" name="note_content" rows="4" cols="50">0</textarea>
+    </br>
+        <button type="submit" name="submit">Dodaj</button>
+    </form>
+    </br>
+    <%- include('./notes'); %>
+</body>
+</html>

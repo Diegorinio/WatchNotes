@@ -1,0 +1,7 @@
+<% for(let x=0;x<=data.length-1; x++){ %>
+        <div class='note' id="<%= x %>">
+            <div class='note_title'><%= data[x].note_title %></div>
+            <div class="note_content"><%= data[x].note_content %></div>
+            <button class='delete-note-btn'>Delete</button>
+        </div>
+<% } %>
