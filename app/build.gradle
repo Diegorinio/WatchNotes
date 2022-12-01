@@ -13,6 +13,10 @@ android {
         versionCode 1
         versionName "1.02"
         archivesBaseName = "WatchNotes"
+        defaultConfig {
+            vectorDrawables.useSupportLibrary = true
+        }
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -33,7 +37,8 @@ android {
 }
 
 dependencies {
-
+    //noinspection GradleCompatible
+    implementation 'androidx.fragment:fragment:1.5.4'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'

@@ -6,14 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".options">
 
-    <Button
-        android:id="@+id/mainActivityBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="20dp"
-        tools:ignore="MissingConstraints" />
+    <include layout="@layout/backbtn"/>
 
     <EditText
         android:id="@+id/maxCharactersPreference"

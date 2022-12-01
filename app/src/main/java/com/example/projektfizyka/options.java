@@ -34,7 +34,7 @@ public class options extends AppCompatActivity {
         Notification = new NoteNotification("TESTCHANNELID", getApplicationContext());
 
         Button backBtn;
-        backBtn = findViewById(R.id.mainActivityBtn);
+        backBtn = findViewById(R.id.backBtn);
         linesTestBtn = findViewById(R.id.testLinesBtn);
         charactersTestBtn = findViewById(R.id.testCharactersBtn);
         charactersTestInput = findViewById(R.id.testCharactersInput);

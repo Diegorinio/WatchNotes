@@ -3,6 +3,7 @@ package com.example.projektfizyka;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -97,6 +99,13 @@ public class NoteInputActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //notka 646 znakow 39 linii amazfit bip u pro- 38 bo 39 jest ledwie widoczna
                 Notification.CreateNoteNotification("Notatka", noteInput.getText().toString(),1);
+            }
+        });
+        noteInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
 

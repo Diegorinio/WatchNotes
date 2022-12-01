@@ -10,12 +10,20 @@ public class StringOperations {
         String[] inputArray;
         String result = "";
         //zrob jako array
-        inputArray = input.replaceAll(" ", ";").replaceAll("\n", "").replaceAll("\r", "").split(";");
-        for(int x=0;x<=inputArray.length-1;x++){
-            String new_string = inputArray[x].substring(0,1).toUpperCase()+inputArray[x].substring(1);
-            inputArray[x] = new_string;
-            result+=inputArray[x];
+        inputArray = input.replaceAll(" ", "///").replaceAll("\n", "").replaceAll("\r", "").split("///");
+        for(String i: inputArray) {
+            Log.i("String array:", i);
         }
+        Log.i("Len:", Integer.toString(inputArray.length));
+        for(int x=0;x<=inputArray.length-1;x++){
+            if(inputArray[x].length()>0) {
+                String new_string = inputArray[x].substring(0, 1).toUpperCase()+inputArray[x].substring(1);
+                inputArray[x] = new_string;
+                result += inputArray[x];
+                result.replaceAll("\n", "");
+            }
+        }
+        Log.i("result:", result);
         return result;
     }
 
@@ -49,7 +57,7 @@ public class StringOperations {
                     result[x-1] = Input.substring(0, MaxCharacters-id_len);
                 }
                 else if(x==turns){
-                    result[x-1] = Input.substring(MaxCharacters*(x-1)-id_len, Input.length());
+                    result[x-1] = Input.substring(MaxCharacters*(x-1)-id_len, max);
                 }
                 else{
                     result[x-1] = Input.substring(MaxCharacters*(x-1)-id_len,MaxCharacters*x-id_len);

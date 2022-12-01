@@ -37,7 +37,7 @@ public class NotesFilesPreferences extends NotesFilesManager{
         ShowMeWhatYouGot();
     }
 
-    public void RemoveFileNameFromPreferences(String filename){
+    public void RemoveFile(String filename){
         SharedPreferences.Editor editor = this.sharedpref.edit();
         String list = GetFilesNameList();
         String new_list = list.replace(filename+split_mark,"");

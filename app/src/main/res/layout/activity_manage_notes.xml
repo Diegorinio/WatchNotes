@@ -4,24 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:clickable="true"
-    android:focusableInTouchMode="true"
-    android:id="@+id/MainActivity"
-    >
-
-
-    <Button
-        android:id="@+id/optionsBtn"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:background="@drawable/ic_baseline_settings_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.948"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046" />
+    tools:context=".ManageNotes">
 
     <TextView
         android:id="@+id/noteContentFile"
@@ -41,6 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.937" />
+    <include layout="@layout/backbtn"/>
 
     <ScrollView
         android:id="@+id/FilesListContainerScroll"
@@ -61,7 +45,7 @@
         <LinearLayout
             android:id="@+id/FilesListContainer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:isScrollContainer="true"
             android:orientation="vertical"
             android:scrollbars="vertical"
@@ -105,7 +89,7 @@
         android:layout_width="78dp"
         android:layout_height="48dp"
         android:backgroundTint="@color/red"
-        android:text="Manage"
+        android:text="delete"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sendNotifyBtn"
@@ -113,32 +97,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
         app:layout_constraintVertical_bias="0.318" />
-
-    <Button
-        android:id="@+id/goToFetchBtn"
-        android:layout_width="60dp"
-        android:layout_height="47dp"
-        android:background="@drawable/ic_baseline_cloud_download_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/optionsBtn"
-        app:layout_constraintHorizontal_bias="0.058"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
-        app:srcCompat="@android:drawable/ic_input_add"
-        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
