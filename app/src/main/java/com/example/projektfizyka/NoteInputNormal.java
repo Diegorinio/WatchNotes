@@ -8,25 +8,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-public class NotesActivity extends AppCompatActivity {
+public class NoteInputNormal extends AppCompatActivity {
     private NotesFilesPreferences NoteFiles;
     private TextWatcher editTextWatcher;
     UserSettings settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notes);
+        setContentView(R.layout.activity_input_normal);
         settings = new UserSettings(getApplicationContext());
         NoteFiles = new NotesFilesPreferences(getApplicationContext());
         Button saveToFileBtn = (Button)findViewById(R.id.saveToFile);
@@ -35,6 +30,7 @@ public class NotesActivity extends AppCompatActivity {
         Button backBtn = (Button)findViewById(R.id.backBtn);
         TextView linesCount = (TextView)findViewById(R.id.linesCount);
         TextView charactersCount = (TextView)findViewById(R.id.charactersCount);
+
         saveToFileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,10 +38,10 @@ public class NotesActivity extends AppCompatActivity {
                     UserInteractions.SendMessage(getApplicationContext(), "Title must be longer");
                 }
                 else{
-                    NoteFiles.AddValueToFileNamesPreferences(noteTitle.getText().toString(), noteInputTxt.getText().toString());
-//                NoteFiles.SaveToFile(noteTitle.getText().toString(), noteInputTxt.getText().toString());
-                    UserInteractions.SendMessage(getApplicationContext(), "Files saved");
-                    startActivity(new Intent(NotesActivity.this, MainActivity.class));
+                    if(NoteFiles.AddValueToFileNamesPreferences(noteTitle.getText().toString(), noteInputTxt.getText().toString())){
+                        UserInteractions.SendMessage(getApplicationContext(), "Files saved");
+                        startActivity(new Intent(NoteInputNormal.this, MainActivity.class));
+                    }
                 }
             }
         });
@@ -53,7 +49,7 @@ public class NotesActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(NotesActivity.this, MainActivity.class));
+                startActivity(new Intent(NoteInputNormal.this, MainActivity.class));
             }
         });
 

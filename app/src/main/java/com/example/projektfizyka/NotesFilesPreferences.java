@@ -25,16 +25,23 @@ public class NotesFilesPreferences extends NotesFilesManager{
         ShowMeWhatYouGot();
     }
 
-    public void AddValueToFileNamesPreferences(String title, String content){
-        SharedPreferences.Editor editor = this.sharedpref.edit();
-        String form_title = title.replaceAll(" ", "");
-        String act_string = form_title+split_mark+GetFilesNameList();
-        editor.putString(SharedPreferencesID, act_string);
-        Log.i("File title", act_string);
-        editor.apply();
-        SaveToFile(form_title, content);
-        UserInteractions.SendMessage(_Context, "File saved");
-        ShowMeWhatYouGot();
+    public boolean AddValueToFileNamesPreferences(String title, String content){
+        if(CheckIfFilleExist(title)){
+            UserInteractions.SendMessage(_Context, "File already exists");
+            return false;
+        }
+        else{
+            SharedPreferences.Editor editor = this.sharedpref.edit();
+            String form_title = title.replaceAll(" ", "");
+            String act_string = form_title+split_mark+GetFilesNameList();
+            editor.putString(SharedPreferencesID, act_string);
+            Log.i("File title", act_string);
+            editor.apply();
+            SaveToFile(form_title, content);
+            UserInteractions.SendMessage(_Context, "File saved");
+            ShowMeWhatYouGot();
+            return true;
+        }
     }
 
     public void RemoveFile(String filename){
@@ -46,6 +53,15 @@ public class NotesFilesPreferences extends NotesFilesManager{
         DeleteFile(filename);
         ShowMeWhatYouGot();
         UserInteractions.SendMessage(_Context, "File removed");
+    }
+
+    private boolean CheckIfFilleExist(String searchFileName){
+        if(GetFilesNameList().contains(searchFileName)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     private void SaveToFile(String Title, String content){
@@ -79,7 +95,7 @@ public class NotesFilesPreferences extends NotesFilesManager{
         editor.apply();
     }
 
-    public String GetFilesNameList(){
+    private String GetFilesNameList(){
         String list = this.sharedpref.getString(SharedPreferencesID,"");
         return list;
     }

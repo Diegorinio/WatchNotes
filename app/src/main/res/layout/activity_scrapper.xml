@@ -8,16 +8,16 @@
 
     <TextView
         android:id="@+id/scrappedNoteTitle"
-        android:layout_width="156dp"
-        android:layout_height="51dp"
+        android:layout_width="142dp"
+        android:layout_height="18dp"
         android:hint="note title"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView"
-        app:layout_constraintVertical_bias="0.044" />
+        app:layout_constraintVertical_bias="0.068" />
 
     <TextView
         android:id="@+id/scrappedNoteContent"
@@ -28,14 +28,13 @@
         android:textAlignment="viewStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.339"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrappedNoteTitle"
-        app:layout_constraintVertical_bias="0.141" />
+        app:layout_constraintVertical_bias="0.142" />
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="393dp"
+        android:layout_width="320dp"
         android:layout_height="284dp"
         android:fillViewport="true"
         android:isScrollContainer="true"
@@ -49,7 +48,7 @@
 
         <LinearLayout
             android:id="@+id/Linear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:isScrollContainer="true"
             android:orientation="vertical"
@@ -64,15 +63,27 @@
 
     <include layout="@layout/backbtn"/>
 
-    <Button
+<!--    <Button-->
+<!--        android:id="@+id/saveBtn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="save"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/scrappedNoteContent"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/saveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="save"
+        app:iconGravity="textStart"
+        app:icon="@drawable/ic_baseline_save_alt_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrappedNoteContent"
-        app:layout_constraintVertical_bias="0.24" />
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

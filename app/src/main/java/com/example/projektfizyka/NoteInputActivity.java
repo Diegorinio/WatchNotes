@@ -27,11 +27,11 @@ public class NoteInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         settings = new UserSettings(getApplicationContext());
-        Notification = new NoteNotification("Note", getApplicationContext());
-//        startActivity(new Intent(MainActivity.this, NotesActivity.class));
+        Notification = new NoteNotification("NotesGenerator", getApplicationContext());
+//        startActivity(new Intent(MainActivity.this, NoteInputNormal.class));
         if(settings.CheckIfPreferencesExists()){
             if(settings.isSimulatedMode()){
-                startActivity(new Intent(NoteInputActivity.this, watch_simulation_mode.class));
+                startActivity(new Intent(NoteInputActivity.this, NoteInputSimulation.class));
             }
         }
         else{

@@ -2,28 +2,20 @@ package com.example.projektfizyka;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity{
     UserSettings settings;
     NotesFilesPreferences NoteFiles;
-    Note Notes;
+    NotesGenerator notes;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +23,13 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         settings = new UserSettings(getApplicationContext());
         NoteFiles = new NotesFilesPreferences(getApplicationContext());
-        Notes = new Note(MainActivity.this, this.settings, this.NoteFiles);
+        notes = new NotesGenerator(MainActivity.this, this.settings, this.NoteFiles);
 
 
-//        Button NewNoteActivity = (Button) findViewById(R.id.newNoteBtn);
         Button optionsBtn = (Button)findViewById(R.id.optionsBtn);
         Button fetchBtn = (Button)findViewById(R.id.goToFetchBtn);
-        FloatingActionButton newFloatBtn = (FloatingActionButton)findViewById(R.id.newNote);
+        FloatingActionButton newNoteBtn = (FloatingActionButton)findViewById(R.id.newNote);
+        Button manageNotesBtn = (Button)findViewById(R.id.ManageNotesBtn) ;
 
         Log.i("Connection", String.valueOf(isNetworkAvailable(MainActivity.this)));
 
@@ -48,23 +40,30 @@ public class MainActivity extends AppCompatActivity{
 //            @Override
 //            public void onClick(View view) {
 //                    if(settings.isSimulatedMode()){
-//                        startActivity(new Intent(MainActivity.this, watch_simulation_mode.class));
+//                        startActivity(new Intent(MainActivity.this, NoteInputSimulation.class));
 //                    }
 //                else{
-//                    startActivity((new Intent(MainActivity.this, NotesActivity.class)));
+//                    startActivity((new Intent(MainActivity.this, NoteInputNormal.class)));
 //                }
 //            }
 //        });
 
-        newFloatBtn.setOnClickListener(new View.OnClickListener() {
+        newNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(settings.isSimulatedMode()){
-                    startActivity(new Intent(MainActivity.this, watch_simulation_mode.class));
+                    startActivity(new Intent(MainActivity.this, NoteInputSimulation.class));
                 }
                 else{
-                    startActivity((new Intent(MainActivity.this, NotesActivity.class)));
+                    startActivity((new Intent(MainActivity.this, NoteInputNormal.class)));
                 }
+            }
+        });
+
+        manageNotesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ManageNotes.class));
             }
         });
 
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
 //        GenerateNotes();
-        Notes.GenerateNotes();
+        notes.GenerateNotes();
 
     }
 

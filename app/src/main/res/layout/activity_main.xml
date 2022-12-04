@@ -11,17 +11,31 @@
     >
 
 
-    <Button
+<!--    <Button-->
+<!--        android:id="@+id/optionsBtn"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@drawable/ic_baseline_settings_24"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.948"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.046" />-->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/optionsBtn"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:background="@drawable/ic_baseline_settings_24"
+        app:iconGravity="textStart"
+        app:backgroundTint="@color/black"
+        app:icon="@drawable/ic_baseline_settings_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.046"  />
+
 
     <TextView
         android:id="@+id/noteContentFile"
@@ -44,24 +58,25 @@
 
     <ScrollView
         android:id="@+id/FilesListContainerScroll"
-        android:layout_width="242dp"
-        android:layout_height="218dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:background="@drawable/box"
         android:fillViewport="true"
         android:isScrollContainer="true"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.643"
+        app:layout_constraintVertical_bias="0.772"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:id="@+id/FilesListContainer"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:isScrollContainer="true"
             android:orientation="vertical"
             android:scrollbars="vertical"
@@ -74,18 +89,60 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="78dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/red"
+        android:text="Manage"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sendNotifyBtn"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
+        app:layout_constraintVertical_bias="0.68" />
+
+<!--    <Button-->
+<!--        android:id="@+id/sendNotifyBtn"-->
+<!--        android:layout_width="93dp"-->
+<!--        android:layout_height="53dp"-->
+<!--        android:backgroundTint="@color/green"-->
+<!--        android:enabled="true"-->
+<!--        android:text="send"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.477"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"-->
+<!--        app:layout_constraintVertical_bias="0.261" />-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ManageNotesBtn"
+        android:layout_width="78dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/black"
+        android:text=""
+        app:iconGravity="textEnd"
+        app:icon="@drawable/ic_baseline_view_list_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sendNotifyBtn"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
+        app:layout_constraintVertical_bias="0.68"/>
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sendNotifyBtn"
         android:layout_width="93dp"
         android:layout_height="53dp"
-        android:backgroundTint="@color/green"
+        app:backgroundTint="@color/green"
         android:enabled="true"
-        android:text="send"
+        app:iconGravity="textEnd"
+        app:icon="@drawable/ic_baseline_send_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
-        app:layout_constraintVertical_bias="0.261" />
+        app:layout_constraintVertical_bias="0.261"/>
 
     <TextView
         android:id="@+id/scrappedNoteTitle"
@@ -100,31 +157,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.878" />
 
-    <Button
-        android:id="@+id/deleteBtn"
-        android:layout_width="78dp"
-        android:layout_height="48dp"
-        android:backgroundTint="@color/red"
-        android:text="Manage"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sendNotifyBtn"
-        app:layout_constraintHorizontal_bias="0.459"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
-        app:layout_constraintVertical_bias="0.318" />
-
-    <Button
+<!--    <Button-->
+<!--        android:id="@+id/goToFetchBtn"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="47dp"-->
+<!--        android:background="@drawable/ic_baseline_cloud_download_24"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/optionsBtn"-->
+<!--        app:layout_constraintHorizontal_bias="0.058"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.045" />-->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/goToFetchBtn"
-        android:layout_width="60dp"
-        android:layout_height="47dp"
-        android:background="@drawable/ic_baseline_cloud_download_24"
+        android:layout_width="65dp"
+        android:layout_height="52dp"
+        android:gravity=""
+        app:icon="@drawable/ic_baseline_cloud_download_24"
+        app:backgroundTint="@color/black"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/optionsBtn"
         app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.045" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newNote"
@@ -137,7 +195,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@drawable/ic_baseline_post_add_24"
         tools:ignore="MissingConstraints" />
 
 

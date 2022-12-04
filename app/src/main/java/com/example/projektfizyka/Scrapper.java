@@ -126,6 +126,7 @@ public class Scrapper extends AppCompatActivity {
             String title = Notes.getJSONObject(x).getString("note_title");
             String content = Notes.getJSONObject(x).getString("note_content");
             Button newBtn = CreateElementButton(title);
+            newBtn.setBackgroundResource(R.drawable.note);
             list.addView(newBtn);
 //            TextView newView = CreateTextView(content);
 //            list.addView(newView);
@@ -142,8 +143,8 @@ public class Scrapper extends AppCompatActivity {
     private Button CreateElementButton(String BtnText){
         Button NewBtn = new Button(this);
         NewBtn.setText(BtnText);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(10,10,0,10);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(10,20,0,10);
         NewBtn.setLayoutParams(params);
         return NewBtn;
     }

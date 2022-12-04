@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class watch_simulation_mode extends AppCompatActivity {
+public class NoteInputSimulation extends AppCompatActivity {
     public int maxCharactersSetting;
     public int maxLineLen;
     UserSettings settings;
@@ -67,9 +67,10 @@ public class watch_simulation_mode extends AppCompatActivity {
                     UserInteractions.SendMessage(getApplicationContext(), "Title must be longer");
                 }
                 else{
-                    NoteFiles.AddValueToFileNamesPreferences(noteTitle.getText().toString(), watchSimulationNoteOutput.getText().toString());
-                    UserInteractions.SendMessage(getApplicationContext(), "Files saved");
-                    startActivity(new Intent(watch_simulation_mode.this, MainActivity.class));
+                    if(NoteFiles.AddValueToFileNamesPreferences(noteTitle.getText().toString(), watchSimulationNoteOutput.getText().toString())){
+                        UserInteractions.SendMessage(getApplicationContext(), "Files saved");
+                        startActivity(new Intent(NoteInputSimulation.this, MainActivity.class));
+                    }
                 }
             }
         });
@@ -77,7 +78,7 @@ public class watch_simulation_mode extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(watch_simulation_mode.this, MainActivity.class));
+                startActivity(new Intent(NoteInputSimulation.this, MainActivity.class));
             }
         });
 
@@ -88,7 +89,7 @@ public class watch_simulation_mode extends AppCompatActivity {
                 noteInput.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 addToNoteBtn.onEditorAction((EditorInfo.IME_ACTION_DONE));
                 //powiadomienie
-                Notification.CreateNoteNotification("Note", watchSimulationNoteOutput.getText().toString());
+                Notification.CreateNoteNotification("NotesGenerator", watchSimulationNoteOutput.getText().toString());
             }
         });
 
