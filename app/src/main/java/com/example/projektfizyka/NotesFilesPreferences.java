@@ -32,12 +32,12 @@ public class NotesFilesPreferences extends NotesFilesManager{
         }
         else{
             SharedPreferences.Editor editor = this.sharedpref.edit();
-            String form_title = title.replaceAll(" ", "");
-            String act_string = form_title+split_mark+GetFilesNameList();
+//            String form_title = title.replaceAll(" ", "");
+            String act_string = title+split_mark+GetFilesNameList();
             editor.putString(SharedPreferencesID, act_string);
             Log.i("File title", act_string);
             editor.apply();
-            SaveToFile(form_title, content);
+            SaveToFile(title, content);
             UserInteractions.SendMessage(_Context, "File saved");
             ShowMeWhatYouGot();
             return true;

@@ -6,50 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".ManageNotes">
 
-    <TextView
+        <include layout="@layout/backbtn"/>
+
+    <EditText
         android:id="@+id/noteContentFile"
         android:layout_width="229dp"
         android:layout_height="218dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/edit_text_border"
-        android:hint="Selected note text"
-        android:inputType="none"
+        android:clickable="false"
+        android:focusableInTouchMode="false"
+        android:inputType="textMultiLine"
         android:isScrollContainer="true"
         android:orientation="vertical"
         android:scrollbars="vertical"
         android:singleLine="false"
         android:textAlignment="viewStart"
-        app:layout_constraintBottom_toTopOf="@+id/FilesListContainerScroll"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/scrappedNoteTitle"
+        android:layout_width="162dp"
+        android:layout_height="36dp"
+        android:background="@drawable/edit_text_border"
+        android:focusable="false"
+        android:inputType="text"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/noteContentFile"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.937" />
-    <include layout="@layout/backbtn"/>
+        app:layout_constraintVertical_bias="0.89" />
 
     <ScrollView
         android:id="@+id/FilesListContainerScroll"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/box"
         android:fillViewport="true"
         android:isScrollContainer="true"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.643"
+        app:layout_constraintTop_toBottomOf="@+id/noteContentFile"
         tools:ignore="MissingConstraints">
 
         <GridLayout
             android:id="@+id/FilesListContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:columnCount="3"
             android:isScrollContainer="true"
             android:orientation="horizontal"
-            android:columnCount="3"
-            android:layout_gravity="center_horizontal"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/FilesListContainerScroll"
             app:layout_constraintEnd_toEndOf="@+id/FilesListContainerScroll"
@@ -59,19 +72,22 @@
             app:layout_constraintVertical_bias="0.374" />
     </ScrollView>
 
-<!--    <Button-->
-<!--        android:id="@+id/sendNotifyBtn"-->
-<!--        android:layout_width="93dp"-->
-<!--        android:layout_height="53dp"-->
-<!--        android:backgroundTint="@color/green"-->
-<!--        android:enabled="true"-->
-<!--        android:text="send"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.477"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"-->
-<!--        app:layout_constraintVertical_bias="0.261" />-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/rewriteNoteBtn"
+        android:layout_width="93dp"
+        android:layout_height="53dp"
+        android:backgroundTint="@color/black"
+        android:enabled="true"
+        android:visibility="gone"
+        app:icon="@drawable/ic_baseline_save_24"
+        app:iconGravity="textEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
+        app:layout_constraintVertical_bias="0.0" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sendNotifyBtn"
         android:layout_width="93dp"
@@ -79,28 +95,13 @@
         android:backgroundTint="@color/green"
         android:enabled="true"
         android:text=""
-        app:iconGravity="textEnd"
         app:icon="@drawable/ic_baseline_send_24"
+        app:iconGravity="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
-        app:layout_constraintVertical_bias="0.261" />
-
-    <TextView
-        android:id="@+id/scrappedNoteTitle"
-        android:layout_width="104dp"
-        android:layout_height="22dp"
-        android:hint="Note Title"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/noteContentFile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
-
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

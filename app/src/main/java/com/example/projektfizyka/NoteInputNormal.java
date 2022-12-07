@@ -39,7 +39,6 @@ public class NoteInputNormal extends AppCompatActivity {
                 }
                 else{
                     if(NoteFiles.AddValueToFileNamesPreferences(noteTitle.getText().toString(), noteInputTxt.getText().toString())){
-                        UserInteractions.SendMessage(getApplicationContext(), "Files saved");
                         startActivity(new Intent(NoteInputNormal.this, MainActivity.class));
                     }
                 }

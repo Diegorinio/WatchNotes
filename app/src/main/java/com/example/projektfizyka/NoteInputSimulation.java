@@ -68,7 +68,6 @@ public class NoteInputSimulation extends AppCompatActivity {
                 }
                 else{
                     if(NoteFiles.AddValueToFileNamesPreferences(noteTitle.getText().toString(), watchSimulationNoteOutput.getText().toString())){
-                        UserInteractions.SendMessage(getApplicationContext(), "Files saved");
                         startActivity(new Intent(NoteInputSimulation.this, MainActivity.class));
                     }
                 }

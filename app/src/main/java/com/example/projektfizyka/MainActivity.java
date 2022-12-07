@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+
+
         manageNotesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

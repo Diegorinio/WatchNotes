@@ -1,8 +1,11 @@
 package com.example.projektfizyka;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import java.util.Timer;
@@ -19,5 +22,12 @@ public class UserInteractions{
         builder.setTitle(title);
         builder.setMessage(Msg);
         return builder;
+    }
+
+    public static void hideKeyboard(View view, Activity _activity){
+        InputMethodManager inputMethodManager = (InputMethodManager) _activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (inputMethodManager.isAcceptingText()) {
+            inputMethodManager.hideSoftInputFromWindow(_activity.getCurrentFocus().getWindowToken(),0);
+        }
     }
 }

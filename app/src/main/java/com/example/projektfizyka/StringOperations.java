@@ -52,7 +52,7 @@ public class StringOperations {
             int max = Input.length();
             for(int x=1;x<=turns;x++){
                 String id = Integer.toString(x)+"#";
-                int id_len = id.length();
+                int id_len = id.length()+2;
                 if(x==1){
                     result[x-1] = Input.substring(0, MaxCharacters-id_len);
                 }

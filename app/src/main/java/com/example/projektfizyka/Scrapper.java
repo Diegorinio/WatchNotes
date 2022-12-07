@@ -57,7 +57,9 @@ public class Scrapper extends AppCompatActivity {
                     UserInteractions.SendMessage(getApplicationContext(), "No title or content");
                 }
                 else {
-                    NoteFiles.AddValueToFileNamesPreferences(title, content);
+                    if(NoteFiles.AddValueToFileNamesPreferences(title, content)){
+
+                    };
                 }
             }
         });
@@ -66,10 +68,6 @@ public class Scrapper extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        try {
-//            GenerateNotes(dzejson);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
 //        }
     }
 

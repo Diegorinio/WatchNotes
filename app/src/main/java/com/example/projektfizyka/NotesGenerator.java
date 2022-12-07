@@ -5,14 +5,22 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.text.InputType;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.button.MaterialButton;
 
 public class NotesGenerator extends NoteNotification {
     NotesFilesPreferences NoteFiles;
@@ -59,16 +67,16 @@ public class NotesGenerator extends NoteNotification {
         String[] ListFiles = NoteFiles.GetFilesNamesArray();
         TextView NotePreview = (TextView) _context.findViewById(R.id.noteContentFile);
         TextView NoteTitle = (TextView) _context.findViewById(R.id.scrappedNoteTitle);
-        Button deleteNoteBtn = (Button) _context.findViewById(R.id.deleteBtn);
+//        Button deleteNoteBtn = (Button) _context.findViewById(R.id.deleteBtn);
         Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
+        NotePreview.setMovementMethod(new ScrollingMovementMethod());
         if (ListFiles.length > 0) {
             CreateNotes(ListFiles,ListLayout,NoteTitle,NotePreview);
         }
         else{
-            TextView LudzieTuNikogoNieMa = new TextView(_context);
-            LudzieTuNikogoNieMa.setText("It's empty around here, add new note with button at right-bottom of the screen");
-            ListLayout.addView(LudzieTuNikogoNieMa);
+            NotePreview.setText("It's empty around here, add new note with button at right-bottom of the screen");
         }
+
         sendNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,29 +93,6 @@ public class NotesGenerator extends NoteNotification {
                         }
                     }, 500);
                 }
-            }
-        });
-
-        deleteNoteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //jebac nie chce mi sie pisac handlerow na onclick
-                _context.startActivity(new Intent(_context.getApplicationContext(), ManageNotes.class));
-//                AlertDialog.Builder alert = UserInteractions.AlertBuilder(_context, "Confirm delete", "Do you want to delete file: "+NoteTitle.getText().toString());
-//                alert.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        NoteFiles.RemoveFileNameFromPreferences(NoteTitle.getText().toString());
-//                        RestartActivty();
-//                    }
-//                });
-//                alert.setNegativeButton("Nope", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                });
-//                alert.show();
             }
         });
     }
@@ -134,13 +119,36 @@ public class NotesGenerator extends NoteNotification {
         public void GenerateNotes() {
             GridLayout ListLayout = (GridLayout) _context.findViewById(R.id.FilesListContainer);
             String[] ListFiles = NoteFiles.GetFilesNamesArray();
-            TextView NotePreview = (TextView) _context.findViewById(R.id.noteContentFile);
-            TextView NoteTitle = (TextView) _context.findViewById(R.id.scrappedNoteTitle);
-            Button deleteNoteBtn = (Button) _context.findViewById(R.id.deleteBtn);
+            EditText NotePreview = (EditText) _context.findViewById(R.id.noteContentFile);
+            EditText NoteTitle = (EditText) _context.findViewById(R.id.scrappedNoteTitle);
             Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
+            Button modifyNoteBtn = (Button) _context.findViewById(R.id.rewriteNoteBtn);
             if (ListFiles.length > 0) {
                 CreateNotes(ListFiles, ListLayout, NoteTitle, NotePreview);
             }
+
+            NotePreview.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if(b)
+                        UserInteractions.hideKeyboard(view,_context);
+                }
+            });
+
+            modifyNoteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String title = NoteTitle.getText().toString();
+                    String content = NotePreview.getText().toString();
+                    if(content.length()!=0){
+                        NoteFiles.WriteToFile(title, content);
+                        UserInteractions.SendMessage(_context, "Note modified");
+                    }
+                    else{
+                        UserInteractions.SendMessage(_context, "Note it empty");
+                    }
+                }
+            });
             sendNoteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -167,26 +175,29 @@ public class NotesGenerator extends NoteNotification {
                 if (file == null || file == "") {
                     Log.i("file exc", file);
                 } else {
-                    Button newBtn = CreateElementButton(file);
-                    Button deleteBtn = CreateElementButton("del");
-                    Button editBtn = CreateElementButton("edit");
-                    layout.addView(newBtn);
-//                functionBtn.setBackgroundResource(R.drawable.ic_baseline_highlight_off_10);
+                    Button noteBtn = CreateElementButton(file);
+                    MaterialButton deleteBtn = CreateElementMaterialButton("del");
+                    MaterialButton editBtn = CreateElementMaterialButton("edit");
+                    deleteBtn.setBackgroundTintList(_context.getResources().getColorStateList(R.color.black));
+                    deleteBtn.setIcon(ContextCompat.getDrawable(_context,R.drawable.ic_baseline_delete_forever_24));
+                    editBtn.setBackgroundTintList(_context.getResources().getColorStateList(R.color.black));
+                    editBtn.setIcon(ContextCompat.getDrawable(_context, R.drawable.ic_baseline_edit_note_24));
+                    layout.addView(noteBtn);
                     deleteBtn.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     layout.addView(editBtn);
                     layout.addView(deleteBtn);
-                    newBtn.setBackgroundResource(R.drawable.note);
-                    newBtn.setOnClickListener(new View.OnClickListener() {
+                    noteBtn.setBackgroundResource(R.drawable.note);
+                    noteBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String content;
                             if (_settings.isFormatModeOn()) {
-                                content = StringOperations.FormatStringOutputAuto(NoteFiles.ReadContentFromFile(newBtn.getText().toString()));
+                                content = StringOperations.FormatStringOutputAuto(NoteFiles.ReadContentFromFile(noteBtn.getText().toString()));
                             } else {
-                                content = NoteFiles.ReadContentFromFile(newBtn.getText().toString());
+                                content = NoteFiles.ReadContentFromFile(noteBtn.getText().toString());
                             }
                             NoteContent.setText(content);
-                            NoteTitle.setText(newBtn.getText().toString());
+                            NoteTitle.setText(file);
                         }
                     });
                     deleteBtn.setOnClickListener(new View.OnClickListener() {
@@ -209,15 +220,38 @@ public class NotesGenerator extends NoteNotification {
                             alert.show();
                         }
                     });
+                    editBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String content = NoteFiles.ReadContentFromFile(noteBtn.getText().toString());
+                            NoteContent.setText(content);
+                            NoteTitle.setText(noteBtn.getText().toString());
+                            NoteContent.setFocusable(true);
+                            NoteContent.setFocusableInTouchMode(true);
+                            _context.findViewById(R.id.rewriteNoteBtn).setVisibility(View.VISIBLE);
+//                            NoteTitle.setFocusable(true);
+//                            NoteTitle.setFocusableInTouchMode(true);
+                        }
+                    });
                 }
             }
         }
 
         private Button CreateElementButton(String BtnText) {
-            Button NewBtn = new Button(_context);
+            Button NewBtn = new MaterialButton(_context);
             NewBtn.setText(BtnText);
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
 //        params.setGravity(Gravity.CENTER);
+            params.height = GridLayout.LayoutParams.WRAP_CONTENT;
+            params.width = GridLayout.LayoutParams.WRAP_CONTENT;
+            params.setMargins(5, 5, 5, 12);
+            NewBtn.setLayoutParams(params);
+            return NewBtn;
+        }
+        private MaterialButton CreateElementMaterialButton(String BtnText) {
+            MaterialButton NewBtn = new MaterialButton(_context);
+            NewBtn.setText(BtnText);
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.height = GridLayout.LayoutParams.WRAP_CONTENT;
             params.width = GridLayout.LayoutParams.WRAP_CONTENT;
             params.setMargins(5, 5, 5, 12);

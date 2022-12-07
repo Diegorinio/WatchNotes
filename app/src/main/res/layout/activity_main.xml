@@ -11,17 +11,6 @@
     >
 
 
-<!--    <Button-->
-<!--        android:id="@+id/optionsBtn"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:background="@drawable/ic_baseline_settings_24"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.948"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.046" />-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/optionsBtn"
         android:layout_width="60dp"
@@ -88,33 +77,7 @@
             app:layout_constraintVertical_bias="0.374" />
     </ScrollView>
 
-    <Button
-        android:id="@+id/deleteBtn"
-        android:layout_width="78dp"
-        android:layout_height="48dp"
-        android:backgroundTint="@color/red"
-        android:text="Manage"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sendNotifyBtn"
-        app:layout_constraintHorizontal_bias="0.459"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
-        app:layout_constraintVertical_bias="0.68" />
 
-<!--    <Button-->
-<!--        android:id="@+id/sendNotifyBtn"-->
-<!--        android:layout_width="93dp"-->
-<!--        android:layout_height="53dp"-->
-<!--        android:backgroundTint="@color/green"-->
-<!--        android:enabled="true"-->
-<!--        android:text="send"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.477"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"-->
-<!--        app:layout_constraintVertical_bias="0.261" />-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/ManageNotesBtn"
         android:layout_width="78dp"
