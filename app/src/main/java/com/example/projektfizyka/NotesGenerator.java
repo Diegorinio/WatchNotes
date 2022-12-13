@@ -36,6 +36,42 @@ public class NotesGenerator extends NoteNotification {
         SetUpNoteNotificationManager();
     }
 
+    public void GenerateNotes() {
+        LinearLayout ListLayout = (LinearLayout) _context.findViewById(R.id.FilesListContainer);
+        String[] ListFiles = NoteFiles.GetFilesNamesArray();
+        TextView NotePreview = (TextView) _context.findViewById(R.id.noteContentFile);
+        TextView NoteTitle = (TextView) _context.findViewById(R.id.scrappedNoteTitle);
+        Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
+        NotePreview.setMovementMethod(new ScrollingMovementMethod());
+        Log.i("REs len:", Integer.toString(ListFiles.length));
+        if (ListFiles[0] != "") {
+            sendNoteBtn.setEnabled(true);
+            CreateNotes(ListFiles,ListLayout,NoteTitle,NotePreview);
+        }
+        else{
+            sendNoteBtn.setEnabled(false);
+            NotePreview.setText("It's empty around here, just add new note with button at right bottom :)");
+        }
+        sendNoteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] NotesArray = StringOperations.SplitNotificationsToStringLength(NotePreview.getText().toString(), _settings.getMaxChars());
+                Log.i("notes array", NotesArray.toString());
+                String new_string = "";
+                for(int x=0;x<=NotesArray.length-1;x++){
+                    Log.i("notes array", "id: "+ x +": "+NotesArray[x]);
+                    Handler handler = new Handler();
+                    int finalX1 = x;
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            CreateNoteNotification(NoteTitle.getText().toString(), NotesArray[finalX1],finalX1);
+                        }
+                    }, 500);
+                }
+            }
+        });
+    }
+
     private void CreateNotes(String[] content,LinearLayout layout, TextView NoteTitle,TextView NoteContent){
         for (String file : content) {
             if (file == null || file == "") {
@@ -64,41 +100,6 @@ public class NotesGenerator extends NoteNotification {
         }
     }
 
-    public void GenerateNotes() {
-        LinearLayout ListLayout = (LinearLayout) _context.findViewById(R.id.FilesListContainer);
-        String[] ListFiles = NoteFiles.GetFilesNamesArray();
-        TextView NotePreview = (TextView) _context.findViewById(R.id.noteContentFile);
-        TextView NoteTitle = (TextView) _context.findViewById(R.id.scrappedNoteTitle);
-//        Button deleteNoteBtn = (Button) _context.findViewById(R.id.deleteBtn);
-        Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
-        NotePreview.setMovementMethod(new ScrollingMovementMethod());
-        if (ListFiles.length > 0) {
-            CreateNotes(ListFiles,ListLayout,NoteTitle,NotePreview);
-        }
-        else{
-            NotePreview.setText("It's empty around here, add new note with button at right-bottom of the screen");
-        }
-
-        sendNoteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String[] NotesArray = StringOperations.SplitNotificationsToStringLength(NotePreview.getText().toString(), _settings.getMaxChars());
-                Log.i("notes array", NotesArray.toString());
-                String new_string = "";
-                for(int x=0;x<=NotesArray.length-1;x++){
-                    Log.i("notes array", "id: "+ x +": "+NotesArray[x]);
-                    Handler handler = new Handler();
-                    int finalX1 = x;
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            CreateNoteNotification(NoteTitle.getText().toString(), NotesArray[finalX1],finalX1);
-                        }
-                    }, 500);
-                }
-            }
-        });
-    }
-
     private Button CreateElementButton(String BtnText) {
         Button NewBtn = new Button(_context);
         NewBtn.setText(BtnText);
@@ -117,12 +118,7 @@ public class NotesGenerator extends NoteNotification {
         _context.startActivity(_context.getIntent());
     }
 
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager) _context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-
+// GRID
     public class NotesGeneratorGrid{
         public void GenerateNotes() {
             GridLayout ListLayout = (GridLayout) _context.findViewById(R.id.FilesListContainer);
@@ -131,8 +127,13 @@ public class NotesGenerator extends NoteNotification {
             EditText NoteTitle = (EditText) _context.findViewById(R.id.scrappedNoteTitle);
             Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
             Button modifyNoteBtn = (Button) _context.findViewById(R.id.rewriteNoteBtn);
-            if (ListFiles.length > 0) {
+            if (ListFiles[0] != "") {
+                sendNoteBtn.setEnabled(true);
                 CreateNotes(ListFiles, ListLayout, NoteTitle, NotePreview);
+            }
+            else{
+                NotePreview.setText("It seems like you don't add any note, just go back and create one with button at bottom right :)");
+                sendNoteBtn.setEnabled(false);
             }
 
             NotePreview.setOnFocusChangeListener(new View.OnFocusChangeListener() {

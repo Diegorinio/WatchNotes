@@ -78,7 +78,7 @@ public class Scrapper extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Document doc;
-            String url = "https://magicznykasztan.github.io/";
+            String url = "https://diegorinio.github.io/";
             try{
                 if(settings.isCustomFetchUrlIsEnabled()){
                     url = settings.getCustomFetchUrl();

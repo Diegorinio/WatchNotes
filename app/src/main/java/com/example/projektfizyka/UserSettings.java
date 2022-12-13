@@ -128,7 +128,7 @@ public class UserSettings {
         return sharedpref.getBoolean(isCustomFetchUrlEnabledID, false);
     }
     public String getCustomFetchUrl(){
-        return sharedpref.getString(CustomFetchUrlID, "https://magicznykasztan.github.io/");
+        return sharedpref.getString(CustomFetchUrlID, "https://diegorinio.github.io/");
     }
 
 }
