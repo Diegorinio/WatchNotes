@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -45,6 +46,7 @@ public class NotesGenerator extends NoteNotification {
                 LinearLayout.LayoutParams params = setLinearLayout();
                 newBtn.setLayoutParams(params);
                 newBtn.setBackgroundResource(R.drawable.note);
+                newBtn.setTextColor(_context.getResources().getColorStateList(R.color.white));
                 newBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -115,6 +117,12 @@ public class NotesGenerator extends NoteNotification {
         _context.startActivity(_context.getIntent());
     }
 
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager) _context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+
     public class NotesGeneratorGrid{
         public void GenerateNotes() {
             GridLayout ListLayout = (GridLayout) _context.findViewById(R.id.FilesListContainer);
@@ -130,8 +138,10 @@ public class NotesGenerator extends NoteNotification {
             NotePreview.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
-                    if(b)
-                        UserInteractions.hideKeyboard(view,_context);
+                    if(!b){
+                        InputMethodManager inputMethodManager =(InputMethodManager) _context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
                 }
             });
 
@@ -161,7 +171,7 @@ public class NotesGenerator extends NoteNotification {
                         int finalX1 = x;
                         handler.postDelayed(new Runnable() {
                             public void run() {
-//                            CreateNoteNotification("Notatka", NotesArray[finalX1],finalX1);
+                            CreateNoteNotification("Notatka", NotesArray[finalX1],finalX1);
                             }
                         }, 500);
                     }

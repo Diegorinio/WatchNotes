@@ -36,7 +36,6 @@ public class ManageNotes extends AppCompatActivity {
                 Log.i("state to load:", String.valueOf(settings.isSimulatedMode()));
                 startActivity((new Intent(ManageNotes.this, MainActivity.class)));
             }
-
         });
 
 

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ManageNotes">
 
-        <include layout="@layout/backbtn"/>
 
     <EditText
         android:id="@+id/noteContentFile"
@@ -44,7 +43,7 @@
         android:id="@+id/FilesListContainerScroll"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/box"
         android:fillViewport="true"
         android:isScrollContainer="true"
@@ -102,6 +101,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
         app:layout_constraintVertical_bias="0.0" />
+
+    <include layout="@layout/backbtn"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

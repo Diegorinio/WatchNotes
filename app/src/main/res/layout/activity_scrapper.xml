@@ -76,9 +76,11 @@
 <!--        app:layout_constraintVertical_bias="0.0" />-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/saveBtn"
+        app:backgroundTint="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:iconGravity="textStart"
+        android:text="save"
         app:icon="@drawable/ic_baseline_save_alt_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

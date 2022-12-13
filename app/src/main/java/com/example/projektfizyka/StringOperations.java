@@ -33,7 +33,7 @@ public class StringOperations {
         JSONObject reader = new JSONObject(inputJsonString);
 //        JSONArray araj = new JSONArray(inputJsonString);
         JSONArray result = reader.getJSONArray("notes");
-        Log.i("dzejson", result.getJSONObject(1).getString("subject").toString());
+        Log.i("dzejson", result.getJSONObject(0).getString("subject").toString());
         for(int j=0;j<=result.length()-1;j++){
             Log.i("Elements", String.valueOf(result.getString(j)));
         }
@@ -52,7 +52,7 @@ public class StringOperations {
             int max = Input.length();
             for(int x=1;x<=turns;x++){
                 String id = Integer.toString(x)+"#";
-                int id_len = id.length()+2;
+                int id_len = id.length()+3;
                 if(x==1){
                     result[x-1] = Input.substring(0, MaxCharacters-id_len);
                 }
