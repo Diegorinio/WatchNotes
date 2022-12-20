@@ -42,16 +42,17 @@
     <ScrollView
         android:id="@+id/FilesListContainerScroll"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="250dp"
         android:background="@drawable/box"
         android:fillViewport="true"
         android:isScrollContainer="true"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noteContentFile"
+        app:layout_constraintVertical_bias="0.073"
         tools:ignore="MissingConstraints">
 
         <GridLayout
@@ -59,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:columnCount="3"
+            android:columnCount="2"
             android:isScrollContainer="true"
             android:orientation="horizontal"
             android:scrollbars="vertical"
@@ -82,10 +83,10 @@
         app:iconGravity="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.316" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sendNotifyBtn"
@@ -100,9 +101,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.316" />
 
-    <include layout="@layout/backbtn"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/backbtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

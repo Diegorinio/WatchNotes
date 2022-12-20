@@ -90,7 +90,7 @@ public class NotesGenerator extends NoteNotification {
                         if (_settings.isFormatModeOn()) {
                             content = StringOperations.FormatStringOutputAuto(NoteFiles.ReadContentFromFile(newBtn.getText().toString()));
                         } else {
-                            content = NoteFiles.ReadContentFromFile(newBtn.getText().toString());
+                            content = StringOperations.FormatStringOutput(NoteFiles.ReadContentFromFile(newBtn.getText().toString()));
                         }
                         NoteContent.setText(content);
                         NoteTitle.setText(newBtn.getText().toString());
@@ -135,16 +135,6 @@ public class NotesGenerator extends NoteNotification {
                 NotePreview.setText("It seems like you don't add any note, just go back and create one with button at bottom right :)");
                 sendNoteBtn.setEnabled(false);
             }
-
-            NotePreview.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean b) {
-                    if(!b){
-                        InputMethodManager inputMethodManager =(InputMethodManager) _context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    }
-                }
-            });
 
             modifyNoteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -191,11 +181,11 @@ public class NotesGenerator extends NoteNotification {
                     MaterialButton editBtn = CreateElementMaterialButton("edit");
                     deleteBtn.setBackgroundTintList(_context.getResources().getColorStateList(R.color.black));
                     deleteBtn.setIcon(ContextCompat.getDrawable(_context,R.drawable.ic_baseline_delete_forever_24));
-                    editBtn.setBackgroundTintList(_context.getResources().getColorStateList(R.color.black));
-                    editBtn.setIcon(ContextCompat.getDrawable(_context, R.drawable.ic_baseline_edit_note_24));
+//                    editBtn.setBackgroundTintList(_context.getResources().getColorStateList(R.color.black));
+//                    editBtn.setIcon(ContextCompat.getDrawable(_context, R.drawable.ic_baseline_edit_note_24));
                     layout.addView(noteBtn);
                     deleteBtn.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    layout.addView(editBtn);
+//                    layout.addView(editBtn);
                     layout.addView(deleteBtn);
                     noteBtn.setBackgroundResource(R.drawable.note);
                     noteBtn.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +199,13 @@ public class NotesGenerator extends NoteNotification {
                             }
                             NoteContent.setText(content);
                             NoteTitle.setText(file);
+//                            String content = NoteFiles.ReadContentFromFile(noteBtn.getText().toString());
+                            NoteContent.setText(content);
+                            NoteTitle.setText(noteBtn.getText().toString());
+                            NoteContent.setFocusable(true);
+                            NoteContent.setFocusableInTouchMode(true);
+                            _context.findViewById(R.id.rewriteNoteBtn).setVisibility(View.VISIBLE);
+//                            _context.findViewById(R.id.rewriteNoteBtn).setEnabled(true);
                         }
                     });
                     deleteBtn.setOnClickListener(new View.OnClickListener() {
@@ -231,19 +228,19 @@ public class NotesGenerator extends NoteNotification {
                             alert.show();
                         }
                     });
-                    editBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String content = NoteFiles.ReadContentFromFile(noteBtn.getText().toString());
-                            NoteContent.setText(content);
-                            NoteTitle.setText(noteBtn.getText().toString());
-                            NoteContent.setFocusable(true);
-                            NoteContent.setFocusableInTouchMode(true);
-                            _context.findViewById(R.id.rewriteNoteBtn).setVisibility(View.VISIBLE);
-//                            NoteTitle.setFocusable(true);
-//                            NoteTitle.setFocusableInTouchMode(true);
-                        }
-                    });
+//                    editBtn.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            String content = NoteFiles.ReadContentFromFile(noteBtn.getText().toString());
+//                            NoteContent.setText(content);
+//                            NoteTitle.setText(noteBtn.getText().toString());
+//                            NoteContent.setFocusable(true);
+//                            NoteContent.setFocusableInTouchMode(true);
+//                            _context.findViewById(R.id.rewriteNoteBtn).setVisibility(View.VISIBLE);
+////                            _context.findViewById(R.id.rewriteNoteBtn).setEnabled(true);
+//                        }
+//
+//                    });
                 }
             }
         }
