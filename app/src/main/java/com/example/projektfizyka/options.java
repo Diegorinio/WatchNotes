@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,16 @@ public class options extends AppCompatActivity {
         settings = new UserSettings(getApplicationContext());
         settings.init_OptionsGetActivity(this);
         Notification = new NoteNotification("TESTCHANNELID", getApplicationContext());
+
+        Button updateBtn = (Button)findViewById(R.id.updateBtn);
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://drive.google.com/drive/folders/1gvbnSvAPGD0pLqk0ynFhbAIvX1djSVxv?usp=share_link";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+
 
         Button backBtn;
         backBtn = findViewById(R.id.backBtn);
