@@ -68,12 +68,16 @@ public class options extends AppCompatActivity {
         CheckBox autoFormatMode = (CheckBox)findViewById(R.id.autoFormatModeCheckBox);
         autoFormatMode.setChecked(settings.isFormatModeOn());
 
+        //custom fetch
         CheckBox customFetchCheckBox = (CheckBox)findViewById(R.id.customFetchCheckbox);
+        Button OpenUrlBtn = (Button)findViewById(R.id.goToUrlBtn);
         customFetchCheckBox.setChecked(settings.isCustomFetchUrlIsEnabled());
         EditText customFetchUrl = (EditText)findViewById(R.id.customFetchUrl);
         customFetchUrl.setText(settings.getCustomFetchUrl());
+
         if(customFetchCheckBox.isChecked()){
             customFetchUrl.setEnabled(true);
+            OpenUrlBtn.setVisibility(View.VISIBLE);
         }
 
         customFetchCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -81,6 +85,7 @@ public class options extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if(!customFetchCheckBox.isChecked()){
                     customFetchUrl.setEnabled(false);
+                    OpenUrlBtn.setVisibility(View.GONE);
                 }
                 else{
                     AlertDialog.Builder alert = UserInteractions.AlertBuilder(options.this, "WARNING!", "This option is for advanced users");
@@ -89,6 +94,7 @@ public class options extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             customFetchUrl.setEnabled(true);
                             customFetchCheckBox.setChecked(true);
+                            OpenUrlBtn.setVisibility(View.VISIBLE);
                             UserInteractions.SendMessage(getApplicationContext(), "Custom fetch url enabled");
                         }
                     });
@@ -96,10 +102,19 @@ public class options extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             customFetchCheckBox.setChecked(false);
+                            OpenUrlBtn.setVisibility(View.GONE);
                         }
                     });
                     alert.show();
                 }
+            }
+        });
+
+        OpenUrlBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = settings.getCustomFetchUrl().replace("/notes","");
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
         });
 

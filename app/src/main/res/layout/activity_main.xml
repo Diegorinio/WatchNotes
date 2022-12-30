@@ -26,13 +26,15 @@
         app:layout_constraintVertical_bias="0.046"  />
 
 
-    <TextView
+    <EditText
         android:id="@+id/noteContentFile"
         android:layout_width="229dp"
         android:layout_height="218dp"
         android:background="@drawable/edit_text_border"
-        android:fontFamily="sans-serif-medium"
         android:hint=""
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:focusable="false"
         android:isScrollContainer="true"
         android:orientation="vertical"
         android:scrollbars="vertical"
@@ -160,7 +162,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976"
-        app:srcCompat="@drawable/ic_baseline_post_add_24"
+        app:srcCompat="@drawable/ic_baseline_add_to_photos_24"
         tools:ignore="MissingConstraints" />
 
 

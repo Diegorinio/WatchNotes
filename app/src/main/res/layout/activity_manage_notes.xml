@@ -25,12 +25,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/scrappedNoteTitle"
-        android:layout_width="162dp"
-        android:layout_height="36dp"
-        android:background="@drawable/edit_text_border"
+        android:layout_width="173dp"
+        android:layout_height="21dp"
         android:focusable="false"
+        android:fontFamily="sans-serif-medium"
         android:inputType="text"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/noteContentFile"

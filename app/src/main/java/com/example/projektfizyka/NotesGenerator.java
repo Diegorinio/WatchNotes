@@ -39,7 +39,7 @@ public class NotesGenerator extends NoteNotification {
     public void GenerateNotes() {
         LinearLayout ListLayout = (LinearLayout) _context.findViewById(R.id.FilesListContainer);
         String[] ListFiles = NoteFiles.GetFilesNamesArray();
-        TextView NotePreview = (TextView) _context.findViewById(R.id.noteContentFile);
+        EditText NotePreview = (EditText) _context.findViewById(R.id.noteContentFile);
         TextView NoteTitle = (TextView) _context.findViewById(R.id.scrappedNoteTitle);
         Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
         NotePreview.setMovementMethod(new ScrollingMovementMethod());
@@ -124,7 +124,7 @@ public class NotesGenerator extends NoteNotification {
             GridLayout ListLayout = (GridLayout) _context.findViewById(R.id.FilesListContainer);
             String[] ListFiles = NoteFiles.GetFilesNamesArray();
             EditText NotePreview = (EditText) _context.findViewById(R.id.noteContentFile);
-            EditText NoteTitle = (EditText) _context.findViewById(R.id.scrappedNoteTitle);
+            TextView NoteTitle = (TextView) _context.findViewById(R.id.scrappedNoteTitle);
             Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
             Button modifyNoteBtn = (Button) _context.findViewById(R.id.rewriteNoteBtn);
             if (ListFiles[0] != "") {
@@ -195,7 +195,7 @@ public class NotesGenerator extends NoteNotification {
                             if (_settings.isFormatModeOn()) {
                                 content = StringOperations.FormatStringOutputAuto(NoteFiles.ReadContentFromFile(noteBtn.getText().toString()));
                             } else {
-                                content = NoteFiles.ReadContentFromFile(noteBtn.getText().toString());
+                                content = StringOperations.FormatStringOutput(NoteFiles.ReadContentFromFile(noteBtn.getText().toString()));
                             }
                             NoteContent.setText(content);
                             NoteTitle.setText(file);

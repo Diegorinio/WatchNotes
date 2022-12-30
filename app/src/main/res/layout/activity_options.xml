@@ -97,9 +97,9 @@
         android:id="@+id/customFetchUrl"
         android:layout_width="248dp"
         android:layout_height="37dp"
-        android:enabled="false"
         android:layout_marginBottom="332dp"
         android:ems="10"
+        android:enabled="false"
         android:fontFamily="sans-serif-medium"
         android:inputType="textPersonName"
         android:text="https://magicznykasztan.github.io/"
@@ -313,5 +313,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/goToUrlBtn"
+        android:layout_width="106dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/black"
+        android:text="Open"
+        android:visibility="gone"
+        app:icon="@drawable/ic_baseline_web_24"
+        app:iconGravity="textEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/customFetchUrl"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.468" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
