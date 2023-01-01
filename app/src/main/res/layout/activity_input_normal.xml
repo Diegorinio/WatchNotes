@@ -41,8 +41,8 @@
 
     <EditText
         android:id="@+id/noteName"
-        android:layout_width="117dp"
-        android:layout_height="48dp"
+        android:layout_width="157dp"
+        android:layout_height="41dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="Note name"

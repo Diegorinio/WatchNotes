@@ -125,15 +125,15 @@ public class NotesGenerator extends NoteNotification {
             String[] ListFiles = NoteFiles.GetFilesNamesArray();
             EditText NotePreview = (EditText) _context.findViewById(R.id.noteContentFile);
             TextView NoteTitle = (TextView) _context.findViewById(R.id.scrappedNoteTitle);
-            Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
+//            Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
             Button modifyNoteBtn = (Button) _context.findViewById(R.id.rewriteNoteBtn);
             if (ListFiles[0] != "") {
-                sendNoteBtn.setEnabled(true);
+//                sendNoteBtn.setEnabled(true);
                 CreateNotes(ListFiles, ListLayout, NoteTitle, NotePreview);
             }
             else{
-                NotePreview.setText("It seems like you don't add any note, just go back and create one with button at bottom right :)");
-                sendNoteBtn.setEnabled(false);
+                NotePreview.setText("It seems like you didn't add any note, just go back and create one with button at bottom right :)");
+//                sendNoteBtn.setEnabled(false);
             }
 
             modifyNoteBtn.setOnClickListener(new View.OnClickListener() {
@@ -150,24 +150,24 @@ public class NotesGenerator extends NoteNotification {
                     }
                 }
             });
-            sendNoteBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String[] NotesArray = StringOperations.SplitNotificationsToStringLength(NotePreview.getText().toString(), _settings.getMaxChars());
-                    Log.i("notes array", NotesArray.toString());
-                    String new_string = "";
-                    for (int x = 0; x <= NotesArray.length - 1; x++) {
-                        Log.i("notes array", "id: " + x + ": " + NotesArray[x]);
-                        Handler handler = new Handler();
-                        int finalX1 = x;
-                        handler.postDelayed(new Runnable() {
-                            public void run() {
-                            CreateNoteNotification("Notatka", NotesArray[finalX1],finalX1);
-                            }
-                        }, 500);
-                    }
-                }
-            });
+//            sendNoteBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    String[] NotesArray = StringOperations.SplitNotificationsToStringLength(NotePreview.getText().toString(), _settings.getMaxChars());
+//                    Log.i("notes array", NotesArray.toString());
+//                    String new_string = "";
+//                    for (int x = 0; x <= NotesArray.length - 1; x++) {
+//                        Log.i("notes array", "id: " + x + ": " + NotesArray[x]);
+//                        Handler handler = new Handler();
+//                        int finalX1 = x;
+//                        handler.postDelayed(new Runnable() {
+//                            public void run() {
+//                            CreateNoteNotification("Notatka", NotesArray[finalX1],finalX1);
+//                            }
+//                        }, 500);
+//                    }
+//                }
+//            });
 
         };
 

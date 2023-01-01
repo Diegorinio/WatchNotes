@@ -15,16 +15,15 @@
         android:id="@+id/optionsBtn"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        app:iconGravity="textStart"
         app:backgroundTint="@color/black"
         app:icon="@drawable/ic_baseline_settings_24"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046"  />
-
+        app:layout_constraintVertical_bias="0.036" />
 
     <EditText
         android:id="@+id/noteContentFile"
@@ -89,11 +88,11 @@
         app:icon="@drawable/ic_baseline_view_list_24"
         app:iconGravity="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sendNotifyBtn"
-        app:layout_constraintHorizontal_bias="0.405"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.018"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FilesListContainerScroll"
-        app:layout_constraintVertical_bias="0.68" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.048" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sendNotifyBtn"
@@ -124,21 +123,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.878" />
 
-<!--    <Button-->
-<!--        android:id="@+id/goToFetchBtn"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="47dp"-->
-<!--        android:background="@drawable/ic_baseline_cloud_download_24"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/optionsBtn"-->
-<!--        app:layout_constraintHorizontal_bias="0.058"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.045" />-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/goToFetchBtn"
         android:layout_width="65dp"
         android:layout_height="52dp"
+        android:visibility="gone"
         android:gravity=""
         app:icon="@drawable/ic_baseline_cloud_download_24"
         app:backgroundTint="@color/black"
