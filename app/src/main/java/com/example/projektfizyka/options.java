@@ -34,14 +34,14 @@ public class options extends AppCompatActivity {
         settings.init_OptionsGetActivity(this);
         Notification = new NoteNotification("TESTCHANNELID", getApplicationContext());
 
-        Button updateBtn = (Button)findViewById(R.id.updateBtn);
-        updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "https://drive.google.com/drive/folders/1gvbnSvAPGD0pLqk0ynFhbAIvX1djSVxv?usp=share_link";
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-            }
-        });
+//        Button updateBtn = (Button)findViewById(R.id.updateBtn);
+//        updateBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String url = "https://drive.google.com/drive/folders/1gvbnSvAPGD0pLqk0ynFhbAIvX1djSVxv?usp=share_link";
+//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+//            }
+//        });
 
 
         Button backBtn;

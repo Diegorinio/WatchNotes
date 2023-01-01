@@ -298,21 +298,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.612" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/updateBtn"
-        android:layout_width="93dp"
-        android:layout_height="53dp"
-        android:backgroundTint="@color/black"
-        android:enabled="true"
-        android:text=""
-        app:icon="@drawable/ic_baseline_update_24"
-        app:iconGravity="textEnd"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.893"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/updateBtn"-->
+<!--        android:layout_width="93dp"-->
+<!--        android:layout_height="53dp"-->
+<!--        android:backgroundTint="@color/black"-->
+<!--        android:enabled="true"-->
+<!--        android:text=""-->
+<!--        app:icon="@drawable/ic_baseline_update_24"-->
+<!--        app:iconGravity="textEnd"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.893"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.023" />-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/goToUrlBtn"
