@@ -100,24 +100,6 @@ public class StringOperations {
         return result;
     }
 
-    public static String StringFromCharsArrayTest(String content, int max){
-        int maxPerLine = max;
-        String result= "";
-        String temp_string = content.replaceAll("\n", "");
-        int char_counter=1;
-        for(char l: temp_string.toCharArray()){
-            char_counter++;
-            if(char_counter==maxPerLine){
-                result+="\n";
-                char_counter=1;
-            }else
-                result+=l;
-        }
-        result.replaceAll("\n","").replaceAll("\r","");
-        ShowInLog("No kurwa mac XD" ,result);
-        return result;
-    }
-
 
     public static void ShowInLog(String title, String message){
         Log.i(title, message);

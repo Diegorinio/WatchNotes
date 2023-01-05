@@ -43,7 +43,7 @@ public class NotesGenerator extends NoteNotification {
         TextView NoteTitle = (TextView) _context.findViewById(R.id.scrappedNoteTitle);
         Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
         NotePreview.setMovementMethod(new ScrollingMovementMethod());
-        Log.i("REs len:", Integer.toString(ListFiles.length));
+        Log.i("res len:", Integer.toString(ListFiles.length));
         if (ListFiles[0] != "") {
             sendNoteBtn.setEnabled(true);
             CreateNotes(ListFiles,ListLayout,NoteTitle,NotePreview);
@@ -177,7 +177,7 @@ public class NotesGenerator extends NoteNotification {
                     Log.i("file exc", file);
                 } else {
                     Button noteBtn = CreateElementButton(file);
-                    MaterialButton deleteBtn = CreateElementMaterialButton("del");
+                    MaterialButton deleteBtn = CreateElementMaterialButton("");
                     MaterialButton editBtn = CreateElementMaterialButton("edit");
                     deleteBtn.setBackgroundTintList(_context.getResources().getColorStateList(R.color.black));
                     deleteBtn.setIcon(ContextCompat.getDrawable(_context,R.drawable.ic_baseline_delete_forever_24));

@@ -23,12 +23,15 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.036" />
+        app:layout_constraintVertical_bias="0.038" />
 
     <EditText
         android:id="@+id/noteContentFile"
-        android:layout_width="229dp"
-        android:layout_height="218dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:paddingLeft="6dp"
+        android:layout_height="220dp"
         android:background="@drawable/edit_text_border"
         android:hint=""
         android:focusableInTouchMode="false"
@@ -49,7 +52,7 @@
     <ScrollView
         android:id="@+id/FilesListContainerScroll"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:background="@drawable/box"
         android:fillViewport="true"
         android:isScrollContainer="true"
@@ -86,13 +89,13 @@
         android:backgroundTint="@color/black"
         android:text=""
         app:icon="@drawable/ic_baseline_view_list_24"
-        app:iconGravity="textEnd"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.038" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sendNotifyBtn"
@@ -111,10 +114,11 @@
 
     <TextView
         android:id="@+id/scrappedNoteTitle"
-        android:layout_width="104dp"
-        android:layout_height="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:hint=""
+        android:textSize="22dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/noteContentFile"
         app:layout_constraintEnd_toEndOf="parent"
