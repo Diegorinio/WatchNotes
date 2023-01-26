@@ -23,7 +23,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.038" />
+        app:layout_constraintVertical_bias="0.049" />
 
     <EditText
         android:id="@+id/noteContentFile"
@@ -84,18 +84,18 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/ManageNotesBtn"
-        android:layout_width="78dp"
-        android:layout_height="48dp"
+        android:layout_width="109dp"
+        android:layout_height="61dp"
         android:backgroundTint="@color/black"
         android:text=""
         app:icon="@drawable/ic_baseline_view_list_24"
-        app:iconGravity="textStart"
+        app:iconGravity="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.038" />
+        app:layout_constraintVertical_bias="0.034" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sendNotifyBtn"
@@ -127,22 +127,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.878" />
 
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/goToFetchBtn"
         android:layout_width="65dp"
         android:layout_height="52dp"
-        android:visibility="gone"
         android:gravity=""
-        app:icon="@drawable/ic_baseline_cloud_download_24"
+        android:visibility="visible"
         app:backgroundTint="@color/black"
+        app:icon="@drawable/ic_baseline_cloud_download_24"
         app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/optionsBtn"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045" />
-
+        app:layout_constraintVertical_bias="0.044" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newNote"
