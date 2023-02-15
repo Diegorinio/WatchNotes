@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WatchNotes</string>
+    <string name="app_name">Trytki</string>
     <string name="app_ID">ca-app-pub-3940256099942544~3347511719</string>
     <string name="title_activity_main_notes">MainNotesActivity</string>
     <!-- Strings used for fragments for navigation -->

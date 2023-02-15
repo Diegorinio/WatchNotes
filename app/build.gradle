@@ -8,12 +8,12 @@ android {
 
 
     defaultConfig {
-        applicationId "com.HappieGames.WatchNotes"
+        applicationId "com.HappieGames.Trytki"
         minSdk 21
         targetSdk 32
         versionCode 1
-        versionName "1.02"
-        archivesBaseName = "WatchNotes"
+        versionName "1.00"
+        archivesBaseName = "Trytki"
         defaultConfig {
             vectorDrawables.useSupportLibrary = true
         }
