@@ -7,6 +7,7 @@
     tools:context=".options">
 
     <include
+        android:id="@+id/include2"
         layout="@layout/backbtn"
         android:layout_width="67dp"
         android:layout_height="53dp"
@@ -341,5 +342,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.408" />
+
+    <ImageView
+        android:id="@+id/statusBT"
+        android:layout_width="39dp"
+        android:layout_height="34dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.061"
+        app:srcCompat="@drawable/ic_baseline_bluetooth_enabled" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

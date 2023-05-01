@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -16,12 +17,16 @@ public class MainActivity extends AppCompatActivity{
     UserSettings settings;
     NotesFilesPreferences NoteFiles;
     NotesGenerator notes;
+    BluetoothStatus BluetoothStatus;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         settings = new UserSettings(getApplicationContext());
+        BluetoothStatus = new BluetoothStatus();
+        ImageView BT_icon = (ImageView) findViewById(R.id.statusBT);
+        BluetoothStatus.ShowBluetoothStatus(BT_icon);
         NoteFiles = new NotesFilesPreferences(getApplicationContext());
         notes = new NotesGenerator(MainActivity.this, this.settings, this.NoteFiles);
 
@@ -97,10 +102,13 @@ public class MainActivity extends AppCompatActivity{
 
         super.onStart();
         if(settings.CheckIfPreferencesExists()){
+//            startActivity((new Intent(MainActivity.this, ManualActivity.class)));
         }
         else{
-            startActivity((new Intent(MainActivity.this, options.class)));
+//            startActivity((new Intent(MainActivity.this, options.class)));
+            startActivity((new Intent(MainActivity.this, ManualActivity.class)));
         }
+//        startActivity((new Intent(MainActivity.this, ManualActivity.class)));
     }
 
     public boolean isNetworkAvailable(Context context) {

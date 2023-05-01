@@ -3,6 +3,21 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('fizyka_debug')
+            storePassword '123456'
+            keyAlias 'key1'
+            keyPassword '123456'
+            storeFile file('/root/AndroidStudioProjects/ProjektFizyka/app/key_sign.jks')
+        }
+        release {
+            storePassword '123456'
+            keyAlias 'key1'
+            keyPassword '123456'
+            storeFile file('/root/AndroidStudioProjects/ProjektFizyka/app/key_sign.jks')
+        }
+    }
     namespace 'com.example.projektfizyka'
     compileSdk 32
 
@@ -11,8 +26,8 @@ android {
         applicationId "com.HappieGames.Trytki"
         minSdk 21
         targetSdk 32
-        versionCode 1
-        versionName "1.00"
+        versionCode 3
+        versionName "1.2"
         archivesBaseName = "Trytki"
         defaultConfig {
             vectorDrawables.useSupportLibrary = true
@@ -20,6 +35,7 @@ android {
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
     buildTypes {
