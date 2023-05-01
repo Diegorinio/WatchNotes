@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class options extends AppCompatActivity {
     public Button linesTestBtn;
@@ -24,6 +26,7 @@ public class options extends AppCompatActivity {
     public CheckBox watchSimulationCheckBox;
     UserSettings settings;
     NoteNotification Notification;
+    BluetoothStatus BluetoothStatus;
     @Override
     //Ja prdl, okazuje sie ze OnCreate jest na samym poczatku a potem OnStart
     //Pierdole nie chce mi sie juz robic z tego funkcji itd to i tak ustawia tylko sharedpreferences
@@ -32,6 +35,7 @@ public class options extends AppCompatActivity {
         setContentView(R.layout.activity_options);
         settings = new UserSettings(getApplicationContext());
         settings.init_OptionsGetActivity(this);
+        BluetoothStatus = new BluetoothStatus();
         Notification = new NoteNotification("TESTCHANNELID", getApplicationContext());
 
 //        Button updateBtn = (Button)findViewById(R.id.updateBtn);
@@ -43,6 +47,8 @@ public class options extends AppCompatActivity {
 //            }
 //        });
 
+        ImageView BT_icon = (ImageView) findViewById(R.id.statusBT);
+        BluetoothStatus.ShowBluetoothStatus(BT_icon);
 
         Button backBtn;
         backBtn = findViewById(R.id.backBtn);

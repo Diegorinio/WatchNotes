@@ -158,5 +158,16 @@
         app:srcCompat="@drawable/ic_baseline_add_to_photos_24"
         tools:ignore="MissingConstraints" />
 
+    <ImageView
+        android:id="@+id/statusBT"
+        android:layout_width="39dp"
+        android:layout_height="34dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037"
+        app:srcCompat="@drawable/ic_baseline_bluetooth_enabled" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

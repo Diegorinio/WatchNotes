@@ -22,7 +22,7 @@ public class NoteNotification extends Notification {
         int noteID = (id.length>=1)? id[0]:0;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(n_Context, ChannelID);
         builder.setContentTitle(Title);
-        builder.setSmallIcon(R.mipmap.ic_icon_foreground);
+        builder.setSmallIcon(R.mipmap.ic_icon);
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(Content));
         builder.setAutoCancel(false);
