@@ -85,12 +85,9 @@ public class Scrapper extends AppCompatActivity {
                 }
                 doc = Jsoup.connect(url).ignoreContentType(true).header("Accept", "application/json").get();
                 String title = doc.title();
-//                Essa.setText(title);
                 Element element = doc.body();
                 Log.i("Title",element.text());
                 JSONArray result = StringOperations.ReadFromJsonString(element.text());
-//                noteContent.setText(result.getJSONObject(0).getString("note_content"));
-//                Essa.setText(result.getJSONObject(0).getString("note_title"));
                 dzejson = result;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -128,9 +125,6 @@ public class Scrapper extends AppCompatActivity {
             Button newBtn = CreateElementButton(title);
             newBtn.setBackgroundResource(R.drawable.note);
             list.addView(newBtn);
-//            TextView newView = CreateTextView(content);
-//            list.addView(newView);
-
             newBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -32,10 +32,8 @@ public class NotesFilesPreferences extends NotesFilesManager{
         }
         else{
             SharedPreferences.Editor editor = this.sharedpref.edit();
-//            String form_title = title.replaceAll(" ", "");
             String act_string = title+split_mark+GetFilesNameList();
             editor.putString(SharedPreferencesID, act_string);
-            Log.i("File title", act_string);
             editor.apply();
             SaveToFile(title, content);
             UserInteractions.SendMessage(_Context, "File saved");
@@ -84,7 +82,6 @@ public class NotesFilesPreferences extends NotesFilesManager{
 
     public String[] GetFilesNamesArray(){
         String list = this.sharedpref.getString(SharedPreferencesID,"");
-        Log.i("No kurwa mac", list);
         String[] FilesName = list.split(":");
         List<String> result = new ArrayList<>();
         return FilesName;
@@ -98,12 +95,6 @@ public class NotesFilesPreferences extends NotesFilesManager{
     private String GetFilesNameList(){
         String list = this.sharedpref.getString(SharedPreferencesID,"");
         return list;
-    }
-
-
-    private int GetFilesNameListLength(){
-        String list = this.sharedpref.getString(SharedPreferencesID,"");
-        return list.length();
     }
 
     private boolean CheckIfFilesListExists(){

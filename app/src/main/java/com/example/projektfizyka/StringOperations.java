@@ -82,15 +82,11 @@ public class StringOperations {
         String input = Input;
         String[] inputArray;
         String result = "";
-        //zrob jako array
         inputArray = input.replaceAll("\n", "").replaceAll("\r", "").split(" ");
-        for(String i: inputArray) {
-            Log.i("String array:", i);
-        }
         Log.i("Len:", Integer.toString(inputArray.length));
         for(int x=0;x<=inputArray.length-1;x++){
             if(inputArray[x].length()>0) {
-                String new_string = inputArray[x]+" "; // dobra chuj pozniej cos ogarne jka narzie unicode empty
+                String new_string = inputArray[x]+" "; //
                 inputArray[x] = new_string;
                 result += inputArray[x];
                 result.replaceAll("\n", "");

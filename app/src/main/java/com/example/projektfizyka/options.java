@@ -28,8 +28,7 @@ public class options extends AppCompatActivity {
     NoteNotification Notification;
     BluetoothStatus BluetoothStatus;
     @Override
-    //Ja prdl, okazuje sie ze OnCreate jest na samym poczatku a potem OnStart
-    //Pierdole nie chce mi sie juz robic z tego funkcji itd to i tak ustawia tylko sharedpreferences
+    //okazuje sie ze OnCreate jest na samym poczatku a potem OnStart
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
@@ -37,15 +36,6 @@ public class options extends AppCompatActivity {
         settings.init_OptionsGetActivity(this);
         BluetoothStatus = new BluetoothStatus();
         Notification = new NoteNotification("TESTCHANNELID", getApplicationContext());
-
-//        Button updateBtn = (Button)findViewById(R.id.updateBtn);
-//        updateBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String url = "https://drive.google.com/drive/folders/1gvbnSvAPGD0pLqk0ynFhbAIvX1djSVxv?usp=share_link";
-//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-//            }
-//        });
 
         ImageView BT_icon = (ImageView) findViewById(R.id.statusBT);
         BluetoothStatus.ShowBluetoothStatus(BT_icon);
@@ -155,7 +145,6 @@ public class options extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 maxCharacters.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                Log.i("simulation mode: ", String.valueOf(watchSimulationCheckBox.isChecked()));
                 settings.SaveToPreferences(maxCharacters, maxLines, maxCharsPerLine, watchSimulationCheckBox, autoFormatMode, customFetchCheckBox, customFetchUrl);
             }
         });
@@ -163,7 +152,6 @@ public class options extends AppCompatActivity {
         charactersTestBtn.setOnClickListener(new View.OnClickListener() {
             //@Override
             public void onClick(View view) {
-                //notka 501 znakow 39 linii amazfit bip u pro- 38 bo 39 jest ledwie widoczna
                 Notification.CreateNoteNotification("Test", MaxCharactersTest());
             }
         });
