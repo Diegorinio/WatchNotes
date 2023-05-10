@@ -128,12 +128,10 @@ public class NotesGenerator extends NoteNotification {
 //            Button sendNoteBtn = (Button) _context.findViewById(R.id.sendNotifyBtn);
             Button modifyNoteBtn = (Button) _context.findViewById(R.id.rewriteNoteBtn);
             if (ListFiles[0] != "") {
-//                sendNoteBtn.setEnabled(true);
                 CreateNotes(ListFiles, ListLayout, NoteTitle, NotePreview);
             }
             else{
                 NotePreview.setText("It seems like you didn't add any note, just go back and create one with button at bottom right :)");
-//                sendNoteBtn.setEnabled(false);
             }
 
             modifyNoteBtn.setOnClickListener(new View.OnClickListener() {
@@ -150,24 +148,6 @@ public class NotesGenerator extends NoteNotification {
                     }
                 }
             });
-//            sendNoteBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    String[] NotesArray = StringOperations.SplitNotificationsToStringLength(NotePreview.getText().toString(), _settings.getMaxChars());
-//                    Log.i("notes array", NotesArray.toString());
-//                    String new_string = "";
-//                    for (int x = 0; x <= NotesArray.length - 1; x++) {
-//                        Log.i("notes array", "id: " + x + ": " + NotesArray[x]);
-//                        Handler handler = new Handler();
-//                        int finalX1 = x;
-//                        handler.postDelayed(new Runnable() {
-//                            public void run() {
-//                            CreateNoteNotification("Notatka", NotesArray[finalX1],finalX1);
-//                            }
-//                        }, 500);
-//                    }
-//                }
-//            });
 
         };
 
@@ -181,11 +161,8 @@ public class NotesGenerator extends NoteNotification {
                     MaterialButton editBtn = CreateElementMaterialButton("edit");
                     deleteBtn.setBackgroundTintList(_context.getResources().getColorStateList(R.color.black));
                     deleteBtn.setIcon(ContextCompat.getDrawable(_context,R.drawable.ic_baseline_delete_forever_24));
-//                    editBtn.setBackgroundTintList(_context.getResources().getColorStateList(R.color.black));
-//                    editBtn.setIcon(ContextCompat.getDrawable(_context, R.drawable.ic_baseline_edit_note_24));
                     layout.addView(noteBtn);
                     deleteBtn.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-//                    layout.addView(editBtn);
                     layout.addView(deleteBtn);
                     noteBtn.setBackgroundResource(R.drawable.note);
                     noteBtn.setOnClickListener(new View.OnClickListener() {
@@ -199,13 +176,11 @@ public class NotesGenerator extends NoteNotification {
                             }
                             NoteContent.setText(content);
                             NoteTitle.setText(file);
-//                            String content = NoteFiles.ReadContentFromFile(noteBtn.getText().toString());
                             NoteContent.setText(content);
                             NoteTitle.setText(noteBtn.getText().toString());
                             NoteContent.setFocusable(true);
                             NoteContent.setFocusableInTouchMode(true);
                             _context.findViewById(R.id.rewriteNoteBtn).setVisibility(View.VISIBLE);
-//                            _context.findViewById(R.id.rewriteNoteBtn).setEnabled(true);
                         }
                     });
                     deleteBtn.setOnClickListener(new View.OnClickListener() {
@@ -228,19 +203,6 @@ public class NotesGenerator extends NoteNotification {
                             alert.show();
                         }
                     });
-//                    editBtn.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            String content = NoteFiles.ReadContentFromFile(noteBtn.getText().toString());
-//                            NoteContent.setText(content);
-//                            NoteTitle.setText(noteBtn.getText().toString());
-//                            NoteContent.setFocusable(true);
-//                            NoteContent.setFocusableInTouchMode(true);
-//                            _context.findViewById(R.id.rewriteNoteBtn).setVisibility(View.VISIBLE);
-////                            _context.findViewById(R.id.rewriteNoteBtn).setEnabled(true);
-//                        }
-//
-//                    });
                 }
             }
         }

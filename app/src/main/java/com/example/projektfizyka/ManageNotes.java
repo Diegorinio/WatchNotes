@@ -26,14 +26,11 @@ public class ManageNotes extends AppCompatActivity {
         notes = new NotesGenerator(ManageNotes.this, this.settings, this.NoteFiles).new NotesGeneratorGrid();
 
 //        notes.GenerateNotes();
-
-
         Button backBtn = (Button) findViewById(R.id.backBtn);
         notes.GenerateNotes();
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("state to load:", String.valueOf(settings.isSimulatedMode()));
                 startActivity((new Intent(ManageNotes.this, MainActivity.class)));
             }
         });

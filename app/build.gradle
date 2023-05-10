@@ -26,8 +26,8 @@ android {
         applicationId "com.HappieGames.Trytki"
         minSdk 21
         targetSdk 32
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "1.5"
         archivesBaseName = "Trytki"
         defaultConfig {
             vectorDrawables.useSupportLibrary = true

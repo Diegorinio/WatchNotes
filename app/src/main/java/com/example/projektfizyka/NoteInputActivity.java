@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 public class NoteInputActivity extends AppCompatActivity {
     //@Override
-    public int maxCharactersSetting;
     UserSettings settings;
     NoteNotification Notification;
     @SuppressLint("MissingInflatedId")
@@ -28,7 +27,6 @@ public class NoteInputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         settings = new UserSettings(getApplicationContext());
         Notification = new NoteNotification("NotesGenerator", getApplicationContext());
-//        startActivity(new Intent(MainActivity.this, NoteInputNormal.class));
         if(settings.CheckIfPreferencesExists()){
             if(settings.isSimulatedMode()){
                 startActivity(new Intent(NoteInputActivity.this, NoteInputSimulation.class));

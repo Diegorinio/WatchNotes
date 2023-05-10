@@ -32,7 +32,6 @@ public class UserSettings {
         this.context = context;
         sharedpref = context.getSharedPreferences(SharedPreferencesID, Context.MODE_PRIVATE);
         init_ReadSharedPreferenceValues();
-        ShowMeWhatYouGot();
     }
 
     public boolean CheckIfPreferencesExists(){
@@ -75,7 +74,6 @@ public class UserSettings {
             editor.putInt(AutoFormatModeID, 0);
         }
         editor.apply();
-        ShowMeWhatYouGot();
         UserInteractions.SendMessage(context, "Settings saved");
     }
 
@@ -89,11 +87,6 @@ public class UserSettings {
         this.autoFormatMode = sharedpref.getInt(AutoFormatModeID, 0);
         this.customFetchUrl = sharedpref.getString(CustomFetchUrlID, "none");
         this.isCustomFetchUrl = sharedpref.getBoolean(isCustomFetchUrlEnabledID, false);
-    }
-
-    private void ShowMeWhatYouGot()
-    {
-        Log.i("shared prefs:", "Max Lines: " + Integer.toString(getMaxLines()) + " Max Characters: " + Integer.toString(getMaxChars())+ " Max Per Line: "+ Integer.toString(getMaxPerLine()) + " Autoformat: " + Boolean.toString(isFormatModeOn()) + " Input watch simulation: " + Boolean.toString(isSimulatedMode()) + " CustomFeth: " + Boolean.toString(isCustomFetchUrlIsEnabled())+ " url: "+ getCustomFetchUrl());
     }
 
     public int getMaxChars()

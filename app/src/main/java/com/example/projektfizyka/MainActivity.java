@@ -35,24 +35,6 @@ public class MainActivity extends AppCompatActivity{
         Button fetchBtn = (Button)findViewById(R.id.goToFetchBtn);
         FloatingActionButton newNoteBtn = (FloatingActionButton)findViewById(R.id.newNote);
         Button manageNotesBtn = (Button)findViewById(R.id.ManageNotesBtn) ;
-
-        Log.i("Connection", String.valueOf(isNetworkAvailable(MainActivity.this)));
-
-//        Notification.SetUpNoteNotificationManager();
-
-//
-//        NewNoteActivity.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                    if(settings.isSimulatedMode()){
-//                        startActivity(new Intent(MainActivity.this, NoteInputSimulation.class));
-//                    }
-//                else{
-//                    startActivity((new Intent(MainActivity.this, NoteInputNormal.class)));
-//                }
-//            }
-//        });
-
         newNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,13 +84,10 @@ public class MainActivity extends AppCompatActivity{
 
         super.onStart();
         if(settings.CheckIfPreferencesExists()){
-//            startActivity((new Intent(MainActivity.this, ManualActivity.class)));
         }
         else{
-//            startActivity((new Intent(MainActivity.this, options.class)));
             startActivity((new Intent(MainActivity.this, ManualActivity.class)));
         }
-//        startActivity((new Intent(MainActivity.this, ManualActivity.class)));
     }
 
     public boolean isNetworkAvailable(Context context) {
